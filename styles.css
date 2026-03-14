@@ -745,8 +745,8 @@ main {
 .game-screen-layout {
   flex: 1;
   display: flex;
-  gap: 2rem;
-  padding: 5rem 2rem 2rem 6rem;
+  gap: 1rem;
+  padding: 5rem 2rem 2rem 4rem;
   min-height: 0;
 }
 
@@ -767,10 +767,12 @@ main {
 }
 
 .game-controls-panel {
-  flex: 0 0 320px;
+  flex: 0 0 300px;
   display: flex;
   flex-direction: column;
-  padding: 1rem 0;
+  padding: 2rem 0 1rem;
+  align-self: flex-end;
+  margin-bottom: 2rem;
 }
 
 /* Focus Popup */
@@ -981,12 +983,16 @@ main {
   display: none;
 }
 
+/* Раскладка точек: 3x3 сетка (1-9)
+   1 2 3
+   4 5 6
+   7 8 9 */
 .dice[data-value="1"] .dot:nth-child(5) { display: block; }
-.dice[data-value="2"] .dot:nth-child(1), .dice[data-value="2"] .dot:nth-child(9) { display: block; }
+.dice[data-value="2"] .dot:nth-child(2), .dice[data-value="2"] .dot:nth-child(8) { display: block; }
 .dice[data-value="3"] .dot:nth-child(1), .dice[data-value="3"] .dot:nth-child(5), .dice[data-value="3"] .dot:nth-child(9) { display: block; }
-.dice[data-value="4"] .dot:nth-child(1), .dice[data-value="4"] .dot:nth-child(3), .dice[data-value="4"] .dot:nth-child(7), .dice[data-value="4"] .dot:nth-child(9) { display: block; }
+.dice[data-value="4"] .dot:nth-child(2), .dice[data-value="4"] .dot:nth-child(4), .dice[data-value="4"] .dot:nth-child(6), .dice[data-value="4"] .dot:nth-child(8) { display: block; }
 .dice[data-value="5"] .dot:nth-child(1), .dice[data-value="5"] .dot:nth-child(3), .dice[data-value="5"] .dot:nth-child(5), .dice[data-value="5"] .dot:nth-child(7), .dice[data-value="5"] .dot:nth-child(9) { display: block; }
-.dice[data-value="6"] .dot:nth-child(1), .dice[data-value="6"] .dot:nth-child(4), .dice[data-value="6"] .dot:nth-child(7), .dice[data-value="6"] .dot:nth-child(3), .dice[data-value="6"] .dot:nth-child(6), .dice[data-value="6"] .dot:nth-child(9) { display: block; }
+.dice[data-value="6"] .dot:nth-child(1), .dice[data-value="6"] .dot:nth-child(2), .dice[data-value="6"] .dot:nth-child(3), .dice[data-value="6"] .dot:nth-child(7), .dice[data-value="6"] .dot:nth-child(8), .dice[data-value="6"] .dot:nth-child(9) { display: block; }
 
 .dice-question {
   position: absolute;
@@ -1032,7 +1038,11 @@ main {
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(8, 1fr);
   gap: 3px;
-  background: var(--purple-deep);
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 100%),
+    url('assets/game-bg.png');
+  background-size: cover;
+  background-position: center;
   padding: 12px;
   border-radius: 16px;
   border: 2px solid rgba(201,162,39,0.4);
@@ -1060,34 +1070,30 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: var(--purple-mid);
+  background: rgba(0, 0, 0, 0.28);
   border-radius: 6px;
   font-size: clamp(0.55rem, 1.4vw, 0.85rem);
   text-align: center;
   padding: 5px;
   position: relative;
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: background 0.3s, box-shadow 0.3s;
+  border: 1px solid rgba(255,255,255,0.2);
+  transition: box-shadow 0.3s, background 0.3s;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.6);
 }
 
-.cell:hover {
-  background: var(--purple-light);
+.game-board .cell:hover {
+  background: rgba(0, 0, 0, 0.38);
   box-shadow: 0 0 10px rgba(124,77,255,0.5);
 }
 
-.cell.arrow-cell {
-  background: linear-gradient(135deg, rgba(76,175,80,0.4) 0%, rgba(201,162,39,0.3) 100%);
-  border-color: rgba(201,162,39,0.5);
+.game-board .cell.arrow-cell,
+.game-board .cell.snake-cell,
+.game-board .cell.goal-cell {
+  background: rgba(0, 0, 0, 0.28);
 }
 
-.cell.snake-cell {
-  background: linear-gradient(135deg, rgba(244,67,54,0.3) 0%, rgba(156,39,176,0.3) 100%);
-  border-color: rgba(244,67,54,0.4);
-}
-
-.cell.goal-cell {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
-  color: var(--bg-dark);
+.game-board .cell.goal-cell {
+  color: var(--gold-light);
   font-weight: 700;
 }
 
@@ -1098,15 +1104,17 @@ main {
 
 .cell-num {
   font-weight: 700;
-  color: var(--gold);
+  color: #f0d84d;
   font-size: 0.65rem;
+  text-shadow: 0 0 4px rgba(240, 216, 77, 0.5), 0 1px 2px rgba(0,0,0,0.8);
 }
 
 .cell-name {
   font-size: 0.5rem;
   line-height: 1.2;
-  color: var(--text-secondary);
+  color: #e8e0ff;
   word-break: break-word;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
 }
 
 .game-pieces {
