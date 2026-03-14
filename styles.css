@@ -1,6 +1,7 @@
 /* Meta Morfeya — Magical Design: Blue, Purple, Gold */
 
 :root {
+  --gold-gradient: linear-gradient(to right, #E6C777 0%, #CBAB50 100%);
   --spacing-block: 1rem;
   --spacing-section: 10rem;
   --spacing-title-content: 2rem;
@@ -146,12 +147,26 @@ main {
   padding: 0 2rem;
 }
 
+.section-title-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--spacing-title-content);
+}
+
+.section-title-icon {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 0.75rem;
+  object-fit: contain;
+}
+
 .section-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 600;
   text-align: center;
-  margin-bottom: var(--spacing-title-content);
+  margin: 0;
   color: var(--gold);
   text-shadow: 0 0 30px rgba(201,162,39,0.3);
 }
@@ -223,7 +238,7 @@ main {
 }
 
 .btn-primary {
-  background: linear-gradient(to left, #e8d48b 0%, #c9a227 50%, #a67c00 100%) !important;
+  background: var(--gold-gradient) !important;
   color: var(--bg-dark) !important;
   padding: 1rem 2rem;
   font-size: 1.05rem;
@@ -257,7 +272,7 @@ main {
 }
 
 /* About */
-.about .section-title {
+.about .section-title-wrap {
   margin-bottom: 0.25rem;
 }
 
@@ -441,6 +456,11 @@ main {
   margin-bottom: var(--spacing-title-content);
 }
 
+.services-header .section-title-icon {
+  display: block;
+  margin: 0 auto 0.75rem;
+}
+
 .services-label {
   display: block;
   font-size: 0.7rem;
@@ -452,7 +472,7 @@ main {
 
 .services-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
@@ -464,20 +484,39 @@ main {
   font-weight: 300;
 }
 
-.gallery-title {
+.section-title-wrap .gallery-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: 600;
   text-align: center;
-  margin: var(--spacing-section) 0 var(--spacing-title-content);
+  margin: 0;
   color: var(--gold);
   text-shadow: 0 0 30px rgba(201,162,39,0.3);
 }
 
+.section-title-wrap:has(.gallery-title) {
+  margin: var(--spacing-section) 0 var(--spacing-title-content);
+}
+
 .services-gallery {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
+}
+
+.services-gallery .gallery-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--gold-warm);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: block;
+}
+
+.services-gallery .gallery-img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 30px rgba(201,162,39,0.2);
 }
 
 .service-cards {
@@ -591,7 +630,7 @@ main {
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(to left, #e8d48b 0%, #c9a227 50%, #a67c00 100%);
+  background: var(--gold-gradient);
   color: var(--bg-dark);
   text-decoration: none;
   border: none;
@@ -707,7 +746,7 @@ main {
 }
 
 .preview-goal {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dim) 100%);
+  background: var(--gold-gradient);
   color: var(--bg-dark);
 }
 
@@ -1312,12 +1351,13 @@ main {
   }
   
   .services-gallery {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     overflow-x: auto;
     padding-bottom: 0.5rem;
   }
-  .services-gallery .photo-placeholder {
-    min-width: 120px;
+  .services-gallery .gallery-img {
+    min-width: 140px;
+    aspect-ratio: 4/3;
   }
   
   .popup {
