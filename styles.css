@@ -746,19 +746,20 @@ main {
   flex: 1;
   display: flex;
   align-items: flex-start;
-  gap: 0.35rem;
+  justify-content: center;
+  gap: 0.63rem;
   padding: 5rem 2rem 2rem 4rem;
   min-height: 0;
 }
 
 .game-board-area {
-  flex: 1;
+  flex: 0 0 min(85vh, 1100px);
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 0;
   position: relative;
-  padding-top: 3rem;
+  padding-top: 5rem;
 }
 
 .game-board-area .game-board {
@@ -771,7 +772,7 @@ main {
   flex: 0 0 300px;
   display: flex;
   flex-direction: column;
-  padding: 3rem 0 1rem 0;
+  padding: 5rem 0 1rem 0;
 }
 
 /* Focus Popup */
