@@ -219,7 +219,7 @@ main {
 }
 
 .btn-primary {
-  background: linear-gradient(180deg, #e8d48b 0%, #c9a227 50%, #a67c00 100%) !important;
+  background: linear-gradient(to left, #e8d48b 0%, #c9a227 50%, #a67c00 100%) !important;
   color: var(--bg-dark) !important;
   padding: 0.9rem 1.8rem;
   border-radius: 2rem !important;
@@ -553,7 +553,7 @@ main {
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(180deg, #e8d48b 0%, #c9a227 50%, #a67c00 100%);
+  background: linear-gradient(to left, #e8d48b 0%, #c9a227 50%, #a67c00 100%);
   color: var(--bg-dark);
   text-decoration: none;
   border: none;
