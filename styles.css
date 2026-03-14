@@ -139,7 +139,7 @@ main {
 
 .section {
   max-width: 1100px;
-  margin: 0 auto 6rem;
+  margin: 0 auto 4rem;
   padding: 0 2rem;
 }
 
@@ -148,7 +148,7 @@ main {
   font-size: 2.5rem;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   color: var(--gold);
   text-shadow: 0 0 30px rgba(201,162,39,0.3);
 }
@@ -160,7 +160,8 @@ main {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 4rem 2rem;
+  padding: 1rem 2rem 5rem;
+  margin-bottom: 4rem;
   background: radial-gradient(ellipse at center, rgba(124,77,255,0.15) 0%, transparent 70%);
 }
 
@@ -413,7 +414,7 @@ main {
 
 .services-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
 }
 
 .services-label {
@@ -439,11 +440,20 @@ main {
   font-weight: 300;
 }
 
+.gallery-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 4rem 0 4rem;
+  color: var(--gold);
+  text-shadow: 0 0 30px rgba(201,162,39,0.3);
+}
+
 .services-gallery {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
-  margin-top: 3rem;
 }
 
 .service-cards {
@@ -451,6 +461,7 @@ main {
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   align-items: stretch;
+  margin-bottom: 4rem;
 }
 
 .service-card {
@@ -580,7 +591,7 @@ main {
 
 /* Game Section */
 .game-section {
-  margin-bottom: 4rem;
+  margin-bottom: 4rem !important;
 }
 
 .game-preview {
