@@ -168,10 +168,10 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.4rem 1.2rem;
+  padding: 0.5rem 1.4rem;
   border: 1px solid var(--gold);
   border-radius: 2rem;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   letter-spacing: 0.2em;
   color: var(--text-primary);
   margin-bottom: 1.5rem;
@@ -179,12 +179,12 @@ main {
 
 .hero-tagline-star {
   color: var(--gold);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 }
 
 .hero-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3rem, 10vw, 5rem);
+  font-size: clamp(3.25rem, 11vw, 5.5rem);
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 0.25rem;
@@ -194,7 +194,7 @@ main {
 
 .hero-subtitle {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-size: clamp(2.25rem, 6.5vw, 4rem);
   font-weight: 600;
   color: var(--gold);
   margin-bottom: 1.5rem;
@@ -204,7 +204,7 @@ main {
 .hero-desc {
   max-width: 480px;
   margin: 0 auto 2rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
   font-weight: 300;
   line-height: 1.6;
@@ -221,7 +221,8 @@ main {
 .btn-primary {
   background: linear-gradient(to left, #e8d48b 0%, #c9a227 50%, #a67c00 100%) !important;
   color: var(--bg-dark) !important;
-  padding: 0.9rem 1.8rem;
+  padding: 1rem 2rem;
+  font-size: 1.05rem;
   border-radius: 2rem !important;
 }
 
@@ -229,6 +230,8 @@ main {
   background: transparent !important;
   border: 2px solid var(--gold) !important;
   color: var(--gold-light) !important;
+  padding: 1rem 2rem;
+  font-size: 1.05rem;
   border-radius: 2rem !important;
 }
 
@@ -239,7 +242,7 @@ main {
 .hero-scroll {
   display: inline-block;
   color: var(--text-muted);
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   text-decoration: none;
   animation: bounce 2s ease-in-out infinite;
 }
@@ -438,9 +441,9 @@ main {
 
 .services-gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
-  margin-bottom: 3rem;
+  margin-top: 3rem;
 }
 
 .service-cards {
@@ -1262,7 +1265,12 @@ main {
   }
   
   .services-gallery {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(6, 1fr);
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+  .services-gallery .photo-placeholder {
+    min-width: 120px;
   }
   
   .popup {
