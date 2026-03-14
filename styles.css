@@ -1,6 +1,7 @@
 /* Meta Morfeya — Magical Design: Blue, Purple, Gold */
 
 :root {
+  --spacing-block: 1rem;
   --bg-dark: #0a0612;
   --bg-card: rgba(20, 12, 35, 0.85);
   --purple-deep: #1a0a2e;
@@ -139,7 +140,7 @@ main {
 
 .section {
   max-width: 1100px;
-  margin: 0 auto 4rem;
+  margin: 0 auto var(--spacing-block);
   padding: 0 2rem;
 }
 
@@ -148,7 +149,7 @@ main {
   font-size: 2.5rem;
   font-weight: 600;
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: var(--spacing-block);
   color: var(--gold);
   text-shadow: 0 0 30px rgba(201,162,39,0.3);
 }
@@ -161,7 +162,7 @@ main {
   justify-content: center;
   text-align: center;
   padding: 1rem 2rem 5rem;
-  margin-bottom: 4rem;
+  margin-bottom: var(--spacing-block);
   background: radial-gradient(ellipse at center, rgba(124,77,255,0.15) 0%, transparent 70%);
 }
 
@@ -175,7 +176,7 @@ main {
   font-size: 0.85rem;
   letter-spacing: 0.2em;
   color: var(--text-primary);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-block);
 }
 
 .hero-tagline-star {
@@ -198,13 +199,13 @@ main {
   font-size: clamp(2.25rem, 6.5vw, 4rem);
   font-weight: 600;
   color: var(--gold);
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--spacing-block);
   line-height: 1.2;
 }
 
 .hero-desc {
   max-width: 480px;
-  margin: 0 auto 2rem;
+  margin: 0 auto var(--spacing-block);
   font-size: 1.1rem;
   color: var(--text-secondary);
   font-weight: 300;
@@ -213,10 +214,10 @@ main {
 
 .hero-buttons {
   display: flex;
-  gap: 1rem;
+  gap: var(--spacing-block);
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-block);
 }
 
 .btn-primary {
@@ -414,7 +415,7 @@ main {
 
 .services-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: var(--spacing-block);
 }
 
 .services-label {
@@ -445,7 +446,7 @@ main {
   font-size: 2.5rem;
   font-weight: 600;
   text-align: center;
-  margin: 4rem 0 4rem;
+  margin: var(--spacing-block) 0;
   color: var(--gold);
   text-shadow: 0 0 30px rgba(201,162,39,0.3);
 }
@@ -461,7 +462,7 @@ main {
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   align-items: stretch;
-  margin-bottom: 4rem;
+  margin-bottom: var(--spacing-block);
 }
 
 .service-card {
@@ -591,7 +592,7 @@ main {
 
 /* Game Section */
 .game-section {
-  margin-bottom: 4rem !important;
+  margin-bottom: var(--spacing-block) !important;
 }
 
 .game-preview {
