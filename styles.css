@@ -495,7 +495,16 @@ main {
 }
 
 .section-title-wrap:has(.gallery-title) {
-  margin: var(--spacing-section) 0 var(--spacing-title-content);
+  margin: var(--spacing-section) 0 0.5rem;
+}
+
+.gallery-desc {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin: 0 auto var(--spacing-title-content);
+  max-width: 560px;
 }
 
 .services-gallery {
