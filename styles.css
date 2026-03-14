@@ -829,29 +829,23 @@ main {
 }
 
 .preview-cell .preview-cell-num {
-  font-weight: 700;
-  color: #f0d84d;
-  font-size: 0.5rem;
+  font-weight: 600;
+  color: rgba(240, 216, 77, 0.5);
+  font-size: 0.1rem;
   line-height: 1;
-  text-shadow: 0 0 4px rgba(240, 216, 77, 0.5), 0 1px 2px rgba(0,0,0,0.8);
+  text-shadow: none;
 }
 
 .preview-cell .preview-cell-name {
-  font-size: 0.35rem;
+  font-size: 0.07rem;
   line-height: 1;
-  color: #e8e0ff;
+  color: rgba(232, 224, 255, 0.5);
   word-break: break-word;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  text-shadow: none;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-}
-
-.preview-cell.preview-goal .preview-cell-num,
-.preview-cell.preview-goal .preview-cell-name {
-  color: var(--bg-dark);
-  text-shadow: none;
 }
 
 .preview-ascent,
@@ -867,11 +861,6 @@ main {
 
 .preview-descent {
   border-color: rgba(244, 67, 54, 0.6);
-}
-
-.preview-goal {
-  background: var(--gold-gradient);
-  border: 1px solid var(--gold-warm);
 }
 
 .game-preview-legend {
@@ -1310,14 +1299,8 @@ main {
 }
 
 .game-board .cell.arrow-cell,
-.game-board .cell.snake-cell,
-.game-board .cell.goal-cell {
+.game-board .cell.snake-cell {
   background: rgba(0, 0, 0, 0.12);
-}
-
-.game-board .cell.goal-cell {
-  color: var(--gold-light);
-  font-weight: 700;
 }
 
 .cell.current {
@@ -1328,16 +1311,16 @@ main {
 .cell-num {
   font-weight: 700;
   color: #f0d84d;
-  font-size: 0.65rem;
+  font-size: 0.13rem;
   text-shadow: 0 0 4px rgba(240, 216, 77, 0.5), 0 1px 2px rgba(0,0,0,0.8);
 }
 
 .cell-name {
-  font-size: 0.5rem;
+  font-size: 0.1rem;
   line-height: 1.2;
-  color: #e8e0ff;
+  color: rgba(232, 224, 255, 0.5);
   word-break: break-word;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  text-shadow: none;
 }
 
 .game-pieces {

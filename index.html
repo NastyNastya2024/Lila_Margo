@@ -268,7 +268,6 @@
           if (typeof ARROWS !== 'undefined' && cellNum in ARROWS) cell.classList.add('preview-ascent');
           else if (typeof SNAKES !== 'undefined' && cellNum in SNAKES) cell.classList.add('preview-descent');
           else cell.classList.add('preview-reflection');
-          if (cellNum === 68) cell.classList.add('preview-goal');
           cell.innerHTML = `<span class="preview-cell-num">${cellNum}</span><span class="preview-cell-name">${cellData?.name || ''}</span>`;
           board.appendChild(cell);
         }
