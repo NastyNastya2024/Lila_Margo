@@ -745,7 +745,8 @@ main {
 .game-screen-layout {
   flex: 1;
   display: flex;
-  gap: 1rem;
+  align-items: flex-start;
+  gap: 0.35rem;
   padding: 5rem 2rem 2rem 4rem;
   min-height: 0;
 }
@@ -770,9 +771,7 @@ main {
   flex: 0 0 300px;
   display: flex;
   flex-direction: column;
-  padding: 2rem 0 1rem;
-  align-self: flex-end;
-  margin-bottom: 2rem;
+  padding: 3rem 0 1rem 0;
 }
 
 /* Focus Popup */
