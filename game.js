@@ -234,7 +234,8 @@ function initGame() {
   });
 
   document.getElementById('startGame').addEventListener('click', startGame);
-  document.getElementById('rollDice').addEventListener('click', rollDice);
+  const diceEl = document.getElementById('dice');
+  if (diceEl) diceEl.addEventListener('click', rollDice);
 
   buildBoard();
   renderPlayersList();
@@ -303,8 +304,10 @@ function startGame() {
 
   const setup = document.getElementById('gameSetup');
   const controls = document.getElementById('gameControls');
+  const diceEl = document.getElementById('dice');
   if (setup) setup.style.display = 'none';
   if (controls) controls.style.display = 'block';
+  if (diceEl) diceEl.removeAttribute('data-value');
 
   updateGameUI();
   updatePieces();
@@ -313,18 +316,19 @@ function startGame() {
 
 function rollDice() {
   const diceEl = document.getElementById('dice');
-  const btn = document.getElementById('rollDice');
-  btn.disabled = true;
+  if (!diceEl || diceEl.classList.contains('dice-disabled')) return;
 
-  // Dice animation
+  diceEl.classList.add('dice-disabled', 'rolling');
+
+  // Quick value changes during roll
   let rolls = 0;
   const rollInterval = setInterval(() => {
-    diceEl.textContent = Math.floor(Math.random() * 6) + 1;
+    diceEl.dataset.value = Math.floor(Math.random() * 6) + 1;
     rolls++;
-    if (rolls > 10) {
+    if (rolls > 8) {
       clearInterval(rollInterval);
       const value = game.rollDice();
-      diceEl.textContent = value;
+      diceEl.dataset.value = value;
 
       const result = game.makeMove(value);
 
@@ -337,25 +341,31 @@ function rollDice() {
 
         if (result.won) {
           setTimeout(() => {
+            diceEl.classList.remove('dice-disabled', 'rolling');
             if (confirm(`${result.message} Хотите сыграть ещё раз?`)) {
               game.reset();
               const setup = document.getElementById('gameSetup');
               const controls = document.getElementById('gameControls');
               if (setup) setup.style.display = 'block';
               if (controls) controls.style.display = 'none';
+              diceEl.removeAttribute('data-value');
             }
           }, 500);
         } else if (result.rollAgain) {
-          btn.disabled = false;
+          setTimeout(() => {
+            diceEl.classList.remove('dice-disabled', 'rolling');
+          }, 400);
           return;
         }
       } else {
         document.getElementById('gameStatus').textContent = result.message;
       }
       updateHistory();
-      btn.disabled = false;
+      setTimeout(() => {
+        diceEl.classList.remove('dice-disabled', 'rolling');
+      }, 450);
     }
-  }, 80);
+  }, 70);
 }
 
 function showInterpretation(result) {

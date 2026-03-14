@@ -198,8 +198,14 @@
             <h3 id="currentPlayerName"></h3>
             <p class="game-status" id="gameStatus"></p>
             <div class="dice-container">
-              <div class="dice" id="dice">?</div>
-              <button id="rollDice" class="btn btn-dice">Бросить кубик</button>
+              <div class="dice" id="dice" title="Нажмите, чтобы бросить">
+                <span class="dice-question">?</span>
+                <div class="dice-face">
+                  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                </div>
+              </div>
             </div>
             <div class="cell-interpretation" id="cellInterpretation"></div>
             <div class="game-history" id="gameHistory"></div>
