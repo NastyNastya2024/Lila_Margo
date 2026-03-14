@@ -2,6 +2,8 @@
 
 :root {
   --spacing-block: 1rem;
+  --spacing-section: 10rem;
+  --spacing-title-content: 2rem;
   --bg-dark: #0a0612;
   --bg-card: rgba(20, 12, 35, 0.85);
   --purple-deep: #1a0a2e;
@@ -140,7 +142,7 @@ main {
 
 .section {
   max-width: 1100px;
-  margin: 0 auto var(--spacing-block);
+  margin: 0 auto var(--spacing-section);
   padding: 0 2rem;
 }
 
@@ -149,7 +151,7 @@ main {
   font-size: 2.5rem;
   font-weight: 600;
   text-align: center;
-  margin-bottom: var(--spacing-block);
+  margin-bottom: var(--spacing-title-content);
   color: var(--gold);
   text-shadow: 0 0 30px rgba(201,162,39,0.3);
 }
@@ -162,7 +164,7 @@ main {
   justify-content: center;
   text-align: center;
   padding: 1rem 2rem 5rem;
-  margin-bottom: var(--spacing-block);
+  margin-bottom: var(--spacing-section);
   background: radial-gradient(ellipse at center, rgba(124,77,255,0.15) 0%, transparent 70%);
 }
 
@@ -255,6 +257,10 @@ main {
 }
 
 /* About */
+.about .section-title {
+  margin-bottom: 0.25rem;
+}
+
 .about-layout {
   display: flex;
   gap: 2.5rem;
@@ -264,14 +270,20 @@ main {
 }
 
 .about-photo {
-  flex: 0 0 280px;
+  flex: 0 0 320px;
+  margin-top: -0.5rem;
 }
 
 .about-photo-main {
+  width: 100%;
+  height: auto;
   aspect-ratio: 3/4;
-  min-height: 320px;
+  min-height: 420px;
+  object-fit: cover;
+  object-position: center top;
   border: 1px solid var(--gold-warm);
   border-radius: 12px;
+  display: block;
 }
 
 .photo-placeholder {
@@ -358,10 +370,12 @@ main {
   background: var(--bg-card);
   border: 1px solid var(--gold-warm);
   border-radius: 16px;
-  max-width: 600px;
+  max-width: 800px;
   max-height: 90vh;
-  overflow-y: auto;
+  overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: row;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
@@ -387,20 +401,29 @@ main {
 }
 
 .popup-photo {
+  flex: 0 0 280px;
   padding: 0;
-  border-radius: 16px 16px 0 0;
   overflow: hidden;
+  border-radius: 16px 0 0 16px;
+  align-self: stretch;
 }
 
-.popup-photo .photo-placeholder {
-  border-radius: 16px 16px 0 0;
+.popup-photo .photo-placeholder,
+.popup-photo .about-photo-main {
+  border-radius: 16px 0 0 16px;
   border: none;
-  aspect-ratio: 16/9;
-  min-height: 200px;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
 
 .popup-content {
+  flex: 1;
   padding: 2rem;
+  overflow-y: auto;
 }
 
 .popup-content p {
@@ -415,7 +438,7 @@ main {
 
 .services-header {
   text-align: center;
-  margin-bottom: var(--spacing-block);
+  margin-bottom: var(--spacing-title-content);
 }
 
 .services-label {
@@ -446,7 +469,7 @@ main {
   font-size: 2.5rem;
   font-weight: 600;
   text-align: center;
-  margin: var(--spacing-block) 0;
+  margin: var(--spacing-section) 0 var(--spacing-title-content);
   color: var(--gold);
   text-shadow: 0 0 30px rgba(201,162,39,0.3);
 }
@@ -462,7 +485,7 @@ main {
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   align-items: stretch;
-  margin-bottom: var(--spacing-block);
+  margin-bottom: var(--spacing-section);
 }
 
 .service-card {
@@ -592,7 +615,7 @@ main {
 
 /* Game Section */
 .game-section {
-  margin-bottom: var(--spacing-block) !important;
+  margin-bottom: var(--spacing-section) !important;
 }
 
 .game-preview {
@@ -1208,6 +1231,18 @@ main {
 
 /* Responsive */
 @media (max-width: 900px) {
+  .about-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-photo {
+    flex: none;
+    width: 100%;
+    max-width: 320px;
+    margin-top: 0;
+  }
+
   .service-cards {
     grid-template-columns: 1fr;
   }
@@ -1288,5 +1323,15 @@ main {
   .popup {
     max-width: 100%;
     margin: 1rem;
+    flex-direction: column;
+  }
+  .popup-photo {
+    flex: none;
+    width: 100%;
+    max-height: 280px;
+  }
+  .popup-photo .about-photo-main {
+    min-height: 200px;
+    border-radius: 16px 16px 0 0;
   }
 }
