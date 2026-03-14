@@ -154,11 +154,22 @@ main {
   margin-bottom: var(--spacing-title-content);
 }
 
-.section-title-icon {
-  width: 44px;
-  height: 44px;
+.heading-icon-circle {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--gold-warm);
+  border-radius: 50%;
+  color: var(--gold-warm);
+  background: transparent;
   margin-bottom: 0.75rem;
-  object-fit: contain;
+}
+
+.heading-icon-circle svg {
+  width: 18px;
+  height: 18px;
 }
 
 .section-title {
@@ -456,9 +467,9 @@ main {
   margin-bottom: var(--spacing-title-content);
 }
 
-.services-header .section-title-icon {
-  display: block;
-  margin: 0 auto 0.75rem;
+.services-header .heading-icon-circle {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .services-label {
@@ -1126,7 +1137,7 @@ main {
   grid-template-rows: repeat(8, 1fr);
   gap: 3px;
   background-image: 
-    linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.4) 100%),
+    linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.15) 100%),
     url('assets/game-bg.png');
   background-size: cover;
   background-position: center;
@@ -1157,11 +1168,12 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.28);
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.12);
   border-radius: 6px;
   font-size: clamp(0.55rem, 1.4vw, 0.85rem);
   text-align: center;
-  padding: 5px;
+  padding: 10px;
   position: relative;
   border: 1px solid rgba(255,255,255,0.2);
   transition: box-shadow 0.3s, background 0.3s;
@@ -1169,14 +1181,14 @@ main {
 }
 
 .game-board .cell:hover {
-  background: rgba(0, 0, 0, 0.38);
+  background: rgba(0, 0, 0, 0.22);
   box-shadow: 0 0 10px rgba(124,77,255,0.5);
 }
 
 .game-board .cell.arrow-cell,
 .game-board .cell.snake-cell,
 .game-board .cell.goal-cell {
-  background: rgba(0, 0, 0, 0.28);
+  background: rgba(0, 0, 0, 0.12);
 }
 
 .game-board .cell.goal-cell {
