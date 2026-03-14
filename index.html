@@ -30,8 +30,19 @@
     <!-- Hero Section -->
     <section class="hero">
       <div class="hero-content">
-        <h1 class="hero-title">Прикоснитесь к магии самообновления</h1>
-        <p class="hero-subtitle">Путь к своей жемчужине через игру Лила и древние практики</p>
+        <div class="hero-tagline">
+          <span class="hero-tagline-star">✦</span>
+          <span>ПУТЬ К САМОПОЗНАНИЮ</span>
+          <span class="hero-tagline-star">✦</span>
+        </div>
+        <h1 class="hero-title">Meta Morfeya</h1>
+        <p class="hero-subtitle">Проводник</p>
+        <p class="hero-desc">Цифровое путешествие через сознание и внутреннее отражение. Бросайте кубик, двигайтесь по священной доске и получайте мудрость, которую ваша душа готова услышать.</p>
+        <div class="hero-buttons">
+          <button type="button" class="btn btn-primary" id="heroGameBtn">Начать путешествие →</button>
+          <a href="#about" class="btn btn-secondary">Узнать больше</a>
+        </div>
+        <a href="#about" class="hero-scroll" aria-label="Прокрутить вниз">↓</a>
       </div>
     </section>
 
@@ -39,123 +50,99 @@
     <section id="about" class="section about">
       <h2 class="section-title">О проводнике</h2>
       
-      <div class="about-gallery">
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Фото 1</span>
+      <div class="about-layout">
+        <div class="about-photo">
+          <div class="photo-placeholder about-photo-main">
+            <span class="placeholder-text">Главное фото</span>
+          </div>
         </div>
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Фото 2</span>
-        </div>
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Фото 3</span>
-        </div>
-        <div class="photo-placeholder large">
-          <span class="placeholder-text">Главное фото</span>
-        </div>
-      </div>
-
-      <div class="about-content">
-        <p class="about-intro">Приветствую вас в этом пространстве.<br>Я — <strong>Маргарита</strong>.</p>
-        
-        <p><strong>Meta Morfeya</strong> — имя, рождённое для трансформации. Я ношу его как проводник, помогая вам меняться осознанно.</p>
-        
-        <p>Маргарита — это имя, данное мне при рождении. Оно — мой земной якорь и моя сила. «Маргарита» означает «жемчужина».</p>
-        
-        <p>И это не случайно. Истинная метаморфоза — это и есть путь к своей жемчужине. Как жемчужина рождается из песчинки, попавшей в раковину и долгим трудом обрастает перламутром, так и мы свою истинную суть обретаем через принятие и преображение всего, что дарит нам жизнь.</p>
-        
-        <p>Я сама прошла путь глубокой трансформации и знаю, каково это — искать и наконец услышать голос своей души. Поэтому мой путь сегодня — быть проводником для вас в те моменты, когда вы жаждете сбросить старую кожу и вспомнить свою изначальную, сияющую форму. Я не теоретик, а практик, который создает для вас безопасное поле именно потому, что сама когда-то в нем нуждалась.</p>
-        
-        <p>Ваша душа уже знает все ответы. Моя задача — помочь вам их услышать. Для этого я использую инструменты, которые говорят на языке души: путешествие-игру, работу с картами-символами и метафорическими зеркалами. В созданном мной пространстве безопасности вы сами находите свои решения.</p>
-        
-        <p>В своей работе я соединяю древние знания и современные практики: я пишу авторские медитации, которые мягко погружают вас в глубины подсознания, провожу трансформационные ретриты для полного перезапуска и обретения внутренней опоры, а также работаю с Родом через сакральную практику Родорад — помогая исцелить родовые сценарии и восстановить связь с истинной силой вашего рода.</p>
-        
-        <p class="about-cta">Здесь вы можете заказать индивидуальную сессию, присоединиться к трансформационной игре или отправиться в путешествие на одном из моих ретритов.</p>
-      </div>
-
-      <div class="about-gallery-secondary">
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Фото 4</span>
-        </div>
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Фото 5</span>
-        </div>
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Фото 6</span>
+        <div class="about-content">
+          <p class="about-intro">Приветствую вас в этом пространстве.<br>Я — <strong>Маргарита</strong>.</p>
+          <p><strong>Meta Morfeya</strong> — имя, рождённое для трансформации. Я ношу его как проводник, помогая вам меняться осознанно.</p>
+          <p>Маргарита — это имя, данное мне при рождении. Оно — мой земной якорь и моя сила. «Маргарита» означает «жемчужина». И это не случайно. Истинная метаморфоза — это путь к своей жемчужине.</p>
+          <button type="button" class="btn btn-outline" id="aboutMoreBtn">Подробнее</button>
         </div>
       </div>
     </section>
 
+    <!-- About Popup -->
+    <div class="popup-overlay" id="aboutPopup" aria-hidden="true">
+      <div class="popup">
+        <button type="button" class="popup-close" id="closeAboutPopup" aria-label="Закрыть">×</button>
+        <div class="popup-photo">
+          <div class="photo-placeholder about-photo-main">
+            <span class="placeholder-text">Главное фото</span>
+          </div>
+        </div>
+        <div class="popup-content">
+          <p class="about-intro">Приветствую вас в этом пространстве.<br>Я — <strong>Маргарита</strong>.</p>
+          <p><strong>Meta Morfeya</strong> — имя, рождённое для трансформации. Я ношу его как проводник, помогая вам меняться осознанно.</p>
+          <p>Маргарита — это имя, данное мне при рождении. Оно — мой земной якорь и моя сила. «Маргарита» означает «жемчужина».</p>
+          <p>И это не случайно. Истинная метаморфоза — это и есть путь к своей жемчужине. Как жемчужина рождается из песчинки, попавшей в раковину и долгим трудом обрастает перламутром, так и мы свою истинную суть обретаем через принятие и преображение всего, что дарит нам жизнь.</p>
+          <p>Я сама прошла путь глубокой трансформации и знаю, каково это — искать и наконец услышать голос своей души. Поэтому мой путь сегодня — быть проводником для вас в те моменты, когда вы жаждете сбросить старую кожу и вспомнить свою изначальную, сияющую форму. Я не теоретик, а практик, который создает для вас безопасное поле именно потому, что сама когда-то в нем нуждалась.</p>
+          <p>Ваша душа уже знает все ответы. Моя задача — помочь вам их услышать. Для этого я использую инструменты, которые говорят на языке души: путешествие-игру, работу с картами-символами и метафорическими зеркалами. В созданном мной пространстве безопасности вы сами находите свои решения.</p>
+          <p>В своей работе я соединяю древние знания и современные практики: я пишу авторские медитации, которые мягко погружают вас в глубины подсознания, провожу трансформационные ретриты для полного перезапуска и обретения внутренней опоры, а также работаю с Родом через сакральную практику Родорад — помогая исцелить родовые сценарии и восстановить связь с истинной силой вашего рода.</p>
+          <p class="about-cta">Здесь вы можете заказать индивидуальную сессию, присоединиться к трансформационной игре или отправиться в путешествие на одном из моих ретритов.</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Services Section -->
     <section id="services" class="section services">
-      <h2 class="section-title">Услуги</h2>
-      
+      <div class="services-header">
+        <span class="services-label">ПУТЬ</span>
+        <h2 class="services-title">Услуги</h2>
+        <p class="services-subtitle">Три формата работы открывают дверь к глубокому самопониманию</p>
+      </div>
+
       <div class="services-gallery">
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Галерея услуг 1</span>
-        </div>
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Галерея услуг 2</span>
-        </div>
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Галерея услуг 3</span>
-        </div>
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Галерея услуг 4</span>
-        </div>
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Галерея услуг 5</span>
-        </div>
-        <div class="photo-placeholder">
-          <span class="placeholder-text">Галерея услуг 6</span>
-        </div>
+        <div class="photo-placeholder"><span class="placeholder-text">Галерея 1</span></div>
+        <div class="photo-placeholder"><span class="placeholder-text">Галерея 2</span></div>
+        <div class="photo-placeholder"><span class="placeholder-text">Галерея 3</span></div>
+        <div class="photo-placeholder"><span class="placeholder-text">Галерея 4</span></div>
+        <div class="photo-placeholder"><span class="placeholder-text">Галерея 5</span></div>
+        <div class="photo-placeholder"><span class="placeholder-text">Галерея 6</span></div>
       </div>
 
       <div class="service-cards">
         <article class="service-card">
-          <div class="service-image-placeholder">
-            <span>Игра Лила</span>
+          <div class="service-card-header">
+            <span class="service-number">01</span>
+            <span class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8"/></svg>
+            </span>
           </div>
           <h3>Игра Лила | Групповое путешествие</h3>
           <p class="service-price">3333 ₽</p>
-          <p>Ваше поле жизни — это игровая доска. 72 клетки — 72 архетипических состояния души. Это не просто игра, это — мистерия.</p>
-          <p>В группе единомышленников вы совершите путешествие от Клетки Рождения к Клетке Просветления, исследуя свои блоки, ресурсы и неожиданные повороты судьбы.</p>
-          <ul>
-            <li>Глубокое осознание своего запроса</li>
-            <li>Ясность пути, снятие ограничений</li>
-            <li>Поддержка группы и новые углы зрения</li>
-          </ul>
-          <p><em>Формат:</em> Онлайн или оффлайн в мини-группе.</p>
-          <a href="#contact" class="btn">Забронировать место в игре</a>
+          <p class="service-desc">Ваше поле жизни — это игровая доска. 72 клетки — 72 архетипических состояния души. В группе единомышленников вы совершите путешествие от Клетки Рождения к Клетке Просветления.</p>
+          <p class="service-format"><em>Формат:</em> Онлайн или оффлайн в мини-группе.</p>
+          <a href="#contact" class="btn btn-service">Забронировать место</a>
         </article>
 
-        <article class="service-card featured">
-          <div class="service-image-placeholder">
-            <span>Индивидуальная сессия</span>
+        <article class="service-card service-card-featured">
+          <div class="service-card-header">
+            <span class="service-number">02</span>
+            <span class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/><circle cx="8" cy="16" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/></svg>
+            </span>
           </div>
           <h3>Игра Лила | Индивидуальная сессия</h3>
           <p class="service-price">7777 ₽</p>
-          <p>Глубинное погружение в ваше личное мифотворчество. Тет-а-тет с проводником вы пройдете полем своей жизни.</p>
-          <ul>
-            <li>Максимальная концентрация на вашем запросе</li>
-            <li>Детальный разбор всех нюансов</li>
-            <li>Полная конфиденциальность</li>
-          </ul>
-          <p><em>Формат:</em> Онлайн или оффлайн (2-5 часов).</p>
-          <a href="#contact" class="btn">Отправиться в индивидуальное путешествие</a>
+          <p class="service-desc">Глубинное погружение в ваше личное мифотворчество. Тет-а-тет с проводником вы пройдёте полем своей жизни для максимально точного ответа на самый насущный вопрос.</p>
+          <p class="service-format"><em>Формат:</em> Онлайн или оффлайн (2–5 часов).</p>
+          <a href="#contact" class="btn btn-service">Отправиться в путешествие</a>
         </article>
 
         <article class="service-card">
-          <div class="service-image-placeholder">
-            <span>Практики</span>
+          <div class="service-card-header">
+            <span class="service-number">03</span>
+            <span class="service-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg>
+            </span>
           </div>
           <h3>Практики для души и Рода</h3>
-          <p>Для тех, кто ищет более глубокие инструменты трансформации.</p>
-          <ul>
-            <li><strong>Авторские медитации</strong> — бережное погружение в себя</li>
-            <li><strong>Ретриты</strong> — пространство полного перезапуска</li>
-            <li><strong>Родорад</strong> — сакральная практика работы с Родом, исцеление родовых программ</li>
-          </ul>
-          <a href="#contact" class="btn">Узнать подробнее</a>
+          <p class="service-desc">Для тех, кто ищет более глубокие инструменты трансформации: авторские медитации, ретриты, сакральная практика Родорад — исцеление родовых программ.</p>
+          <a href="#contact" class="btn btn-service">Узнать подробнее</a>
         </article>
       </div>
     </section>
@@ -163,11 +150,37 @@
     <!-- Game Section -->
     <section id="game" class="section game-section">
       <h2 class="section-title">Игра Лила</h2>
-      <p class="game-intro">Лила — игра самопознания. 72 клетки — 72 архетипических состояния души. Достигните Космического Сознания, проходя через стрелы добродетелей и змеи иллюзий.</p>
+      <div class="game-preview">
+        <div class="game-preview-text">
+          <span class="game-preview-label">ДОСКА</span>
+          <h2 class="game-preview-title">72 состояния сознания</h2>
+          <p>Доска Лилы отображает путь человеческого опыта — от самых плотных состояний иллюзии и кармы до освобождения и космического сознания.</p>
+          <p>Особые клетки запускают подъёмы и спуски, отражая нелинейную природу духовного роста. Ни один шаг не теряется — каждый спуск несёт более глубокое учение.</p>
+          <button type="button" class="btn btn-primary" id="openGameBtnPreview">Начать игру →</button>
+        </div>
+        <div class="game-preview-board-wrap">
+          <div class="game-preview-board" id="gamePreviewBoard"></div>
+          <div class="game-preview-legend">
+            <span class="legend-item"><span class="legend-dot legend-ascent"></span>Подъём</span>
+            <span class="legend-item"><span class="legend-dot legend-descent"></span>Спуск</span>
+            <span class="legend-item"><span class="legend-dot legend-reflection"></span>Размышление</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fullscreen Game Screen -->
+    <div class="game-screen" id="gameScreen" aria-hidden="true">
+      <button type="button" class="game-screen-close" id="closeGameBtn" aria-label="Закрыть">×</button>
       
-      <div class="game-container">
-        <div class="game-sidebar">
-          <div class="game-setup">
+      <div class="game-screen-layout">
+        <div class="game-board-area">
+          <div class="game-board" id="gameBoard"></div>
+          <div class="game-pieces" id="gamePieces"></div>
+        </div>
+        
+        <div class="game-controls-panel">
+          <div class="game-setup" id="gameSetup">
             <h3>Подготовка</h3>
             <div class="players-setup">
               <label>Режим:</label>
@@ -178,10 +191,6 @@
             </div>
             <div id="playersList"></div>
             <button id="addPlayer" class="btn-small">+ Добавить игрока</button>
-            <div class="question-block">
-              <label for="playerQuestion">Ваш вопрос или намерение на сеанс:</label>
-              <textarea id="playerQuestion" placeholder="Например: Что мне мешает найти работу?"></textarea>
-            </div>
             <button id="startGame" class="btn">Начать игру</button>
           </div>
           
@@ -190,29 +199,24 @@
             <p class="game-status" id="gameStatus"></p>
             <div class="dice-container">
               <div class="dice" id="dice">?</div>
-              <button id="rollDice" class="btn">Бросить кубик</button>
+              <button id="rollDice" class="btn btn-dice">Бросить кубик</button>
             </div>
             <div class="cell-interpretation" id="cellInterpretation"></div>
             <div class="game-history" id="gameHistory"></div>
           </div>
         </div>
-        
-        <div class="game-board-wrapper">
-          <div class="game-board" id="gameBoard"></div>
-          <div class="game-pieces" id="gamePieces"></div>
-        </div>
       </div>
+    </div>
 
-      <div class="game-rules">
-        <h3>Правила игры</h3>
-        <ul>
-          <li>Старт с клетки 68 (Космическое Сознание). Чтобы войти в игру — выбросьте 6.</li>
-          <li>При выпадении 6 — бросайте кубик снова.</li>
-          <li>Стрелы поднимают вверх, змеи опускают вниз.</li>
-          <li>Цель — вернуться на клетку 68.</li>
-        </ul>
+    <!-- Focus Popup (before game) -->
+    <div class="focus-popup-overlay" id="focusPopup" aria-hidden="true">
+      <div class="focus-popup">
+        <h3>Как сосредоточиться?</h3>
+        <p class="focus-popup-desc">Перед началом игры сформулируйте вопрос или намерение. На чём вы хотите сосредоточиться в этом сеансе?</p>
+        <textarea id="focusQuestion" placeholder="Например: Что мне мешает найти работу? Как пройдёт мой отпуск? Какой следующий шаг мне сделать?"></textarea>
+        <button type="button" class="btn" id="focusPopupStart">Продолжить</button>
       </div>
-    </section>
+    </div>
 
     <!-- Contact Section -->
     <section id="contact" class="section contact">
@@ -231,5 +235,96 @@
 
   <script src="game-data.js"></script>
   <script src="game.js"></script>
+  <script>
+    // Build game preview board
+    (function() {
+      const board = document.getElementById('gamePreviewBoard');
+      if (!board || typeof BOARD_LAYOUT === 'undefined') return;
+      board.innerHTML = '';
+      for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 9; col++) {
+          const cellNum = BOARD_LAYOUT[row][col];
+          const cell = document.createElement('div');
+          cell.className = 'preview-cell';
+          if (typeof ARROWS !== 'undefined' && cellNum in ARROWS) cell.classList.add('preview-ascent');
+          else if (typeof SNAKES !== 'undefined' && cellNum in SNAKES) cell.classList.add('preview-descent');
+          else cell.classList.add('preview-reflection');
+          if (cellNum === 68) cell.classList.add('preview-goal');
+          cell.textContent = cellNum;
+          board.appendChild(cell);
+        }
+      }
+    })();
+  </script>
+  <script>
+    (function() {
+      // About popup
+      const popup = document.getElementById('aboutPopup');
+      const openBtn = document.getElementById('aboutMoreBtn');
+      const closeBtn = document.getElementById('closeAboutPopup');
+
+      function openAboutPopup() {
+        popup.setAttribute('aria-hidden', 'false');
+        popup.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeAboutPopup() {
+        popup.setAttribute('aria-hidden', 'true');
+        popup.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+
+      openBtn && openBtn.addEventListener('click', openAboutPopup);
+      closeBtn && closeBtn.addEventListener('click', closeAboutPopup);
+      popup && popup.addEventListener('click', function(e) {
+        if (e.target === popup) closeAboutPopup();
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && popup.classList.contains('is-open')) closeAboutPopup();
+      });
+
+      // Game screen + Focus popup
+      const gameScreen = document.getElementById('gameScreen');
+      const focusPopup = document.getElementById('focusPopup');
+      const openGameBtn = document.getElementById('openGameBtn');
+      const heroGameBtn = document.getElementById('heroGameBtn');
+      const closeGameBtn = document.getElementById('closeGameBtn');
+      const focusPopupStart = document.getElementById('focusPopupStart');
+
+      function openGameScreen() {
+        gameScreen.setAttribute('aria-hidden', 'false');
+        gameScreen.classList.add('is-open');
+        document.body.style.overflow = 'hidden';
+        focusPopup.setAttribute('aria-hidden', 'false');
+        focusPopup.classList.add('is-open');
+      }
+
+      function closeGameScreen() {
+        gameScreen.setAttribute('aria-hidden', 'true');
+        gameScreen.classList.remove('is-open');
+        document.body.style.overflow = '';
+      }
+
+      function closeFocusPopup() {
+        focusPopup.setAttribute('aria-hidden', 'true');
+        focusPopup.classList.remove('is-open');
+      }
+
+      openGameBtn && openGameBtn.addEventListener('click', openGameScreen);
+      document.getElementById('openGameBtnPreview') && document.getElementById('openGameBtnPreview').addEventListener('click', openGameScreen);
+      heroGameBtn && heroGameBtn.addEventListener('click', openGameScreen);
+      closeGameBtn && closeGameBtn.addEventListener('click', closeGameScreen);
+
+      focusPopupStart && focusPopupStart.addEventListener('click', closeFocusPopup);
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          if (focusPopup.classList.contains('is-open')) closeFocusPopup();
+          else if (gameScreen.classList.contains('is-open')) closeGameScreen();
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

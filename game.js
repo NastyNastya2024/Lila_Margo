@@ -298,10 +298,13 @@ function renderPlayersList() {
 function startGame() {
   game.gameStarted = true;
   game.reset();
-  game.question = document.getElementById('playerQuestion').value.trim();
+  const focusInput = document.getElementById('focusQuestion');
+  game.question = focusInput ? focusInput.value.trim() : '';
 
-  document.querySelector('.game-setup').style.display = 'none';
-  document.getElementById('gameControls').style.display = 'block';
+  const setup = document.getElementById('gameSetup');
+  const controls = document.getElementById('gameControls');
+  if (setup) setup.style.display = 'none';
+  if (controls) controls.style.display = 'block';
 
   updateGameUI();
   updatePieces();
@@ -336,8 +339,10 @@ function rollDice() {
           setTimeout(() => {
             if (confirm(`${result.message} Хотите сыграть ещё раз?`)) {
               game.reset();
-              document.querySelector('.game-setup').style.display = 'block';
-              document.getElementById('gameControls').style.display = 'none';
+              const setup = document.getElementById('gameSetup');
+              const controls = document.getElementById('gameControls');
+              if (setup) setup.style.display = 'block';
+              if (controls) controls.style.display = 'none';
             }
           }, 500);
         } else if (result.rollAgain) {
@@ -386,10 +391,11 @@ function updateGameUI() {
 function updatePieces() {
   piecesContainer.innerHTML = '';
   const cells = boardElement.querySelectorAll('.cell');
-  const wrapper = document.querySelector('.game-board-wrapper');
+  const wrapper = document.querySelector('.game-board-area');
   if (!wrapper) return;
 
   const wrapperRect = wrapper.getBoundingClientRect();
+  const pieceSize = 12;
 
   game.positions.forEach((pos, i) => {
     const { row, col } = getCellPosition(pos);
@@ -398,8 +404,8 @@ function updatePieces() {
     if (!cellEl) return;
 
     const rect = cellEl.getBoundingClientRect();
-    const offsetX = rect.left - wrapperRect.left + rect.width / 2 - 10;
-    const offsetY = rect.top - wrapperRect.top + rect.height / 2 - 10;
+    const offsetX = rect.left - wrapperRect.left + rect.width / 2 - pieceSize;
+    const offsetY = rect.top - wrapperRect.top + rect.height / 2 - pieceSize;
 
     const piece = document.createElement('div');
     piece.className = `piece piece-${i}`;
