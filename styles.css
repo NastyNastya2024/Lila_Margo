@@ -634,6 +634,7 @@ main {
   width: 100%;
   text-align: center;
   border-radius: 2rem !important;
+  white-space: nowrap;
 }
 
 .btn {
