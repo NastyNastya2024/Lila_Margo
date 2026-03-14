@@ -199,7 +199,7 @@
               </select>
             </div>
             <div id="playersList"></div>
-            <button id="addPlayer" class="btn-small">+ Добавить игрока</button>
+            <button id="addPlayer" class="btn btn-add-player">+ Добавить игрока</button>
             <button id="startGame" class="btn">Начать игру</button>
           </div>
           
@@ -254,21 +254,22 @@
   <script src="game-data.js"></script>
   <script src="game.js"></script>
   <script>
-    // Build game preview board
+    // Build game preview board (same structure as game board)
     (function() {
       const board = document.getElementById('gamePreviewBoard');
-      if (!board || typeof BOARD_LAYOUT === 'undefined') return;
+      if (!board || typeof BOARD_LAYOUT === 'undefined' || typeof LEELA_CELLS === 'undefined') return;
       board.innerHTML = '';
       for (let row = 0; row < 8; row++) {
         for (let col = 0; col < 9; col++) {
           const cellNum = BOARD_LAYOUT[row][col];
+          const cellData = LEELA_CELLS[cellNum];
           const cell = document.createElement('div');
           cell.className = 'preview-cell';
           if (typeof ARROWS !== 'undefined' && cellNum in ARROWS) cell.classList.add('preview-ascent');
           else if (typeof SNAKES !== 'undefined' && cellNum in SNAKES) cell.classList.add('preview-descent');
           else cell.classList.add('preview-reflection');
           if (cellNum === 68) cell.classList.add('preview-goal');
-          cell.textContent = cellNum;
+          cell.innerHTML = `<span class="preview-cell-num">${cellNum}</span><span class="preview-cell-name">${cellData?.name || ''}</span>`;
           board.appendChild(cell);
         }
       }
