@@ -291,13 +291,20 @@ main {
   display: flex;
   gap: 2.5rem;
   align-items: flex-start;
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
+  width: 100%;
 }
 
 .about-photo {
   flex: 0 0 320px;
   margin-top: -0.5rem;
+}
+
+.about-content {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
 }
 
 .about-photo-main {
@@ -334,10 +341,6 @@ main {
   font-size: 0.9rem;
 }
 
-.about-content {
-  flex: 1;
-  min-width: 0;
-}
 
 .about-content p {
   margin-bottom: 1.25rem;
@@ -521,22 +524,81 @@ main {
 .services-gallery {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .services-gallery .gallery-img {
   width: 100%;
   aspect-ratio: 4/3;
+  min-height: 220px;
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid var(--gold-warm);
   transition: transform 0.3s, box-shadow 0.3s;
   display: block;
+  cursor: pointer;
 }
 
 .services-gallery .gallery-img:hover {
-  transform: scale(1.02);
+  transform: scale(1.03);
   box-shadow: 0 0 30px rgba(201,162,39,0.2);
+}
+
+/* Gallery Lightbox */
+.gallery-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.gallery-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.gallery-lightbox img {
+  max-width: 95vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 2px solid var(--gold-warm);
+  box-shadow: 0 0 60px rgba(201,162,39,0.3);
+  transform: scale(0.7);
+  animation: galleryZoomIn 0.35s ease-out forwards;
+}
+
+@keyframes galleryZoomIn {
+  to {
+    transform: scale(1);
+  }
+}
+
+.gallery-lightbox-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--gold-warm);
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  line-height: 1;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.gallery-lightbox-close:hover {
+  background: rgba(197, 164, 126, 0.3);
 }
 
 .service-cards {

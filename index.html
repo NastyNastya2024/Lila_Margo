@@ -139,13 +139,19 @@
       </div>
       <p class="gallery-desc">Здесь вы можете заказать индивидуальную сессию, присоединиться к трансформационной игре или отправиться в путешествие на одном из моих ретритов.</p>
       <div class="services-gallery">
-        <img src="assets/image-09-03-26-11-12-1-e06ddbbf-568a-427d-8927-47e8219b88ac.png" alt="Игра Лила — сессия с доской и картами" class="gallery-img">
-        <img src="assets/image-09-03-26-11-12-2-35b5c6a0-8bab-4423-932a-93b8380ccba5.png" alt="Ретрит в бане" class="gallery-img">
-        <img src="assets/image-09-03-26-11-12-3-cb974c0b-60c5-4033-b63a-5563646e8047.png" alt="Руки над доской Лила с кубиком" class="gallery-img">
-        <img src="assets/image-09-03-26-11-12-4-1cb02e6d-0e4e-4c2a-9de8-312a602dfdaa.png" alt="Практика с садху-досками" class="gallery-img">
-        <img src="assets/image-09-03-26-11-12-5-f97d2cb4-5da4-48bd-a9cc-2e2da1f27ea8.png" alt="Поющие чаши и карты" class="gallery-img">
+        <img src="assets/image-09-03-26-11-12-1-e06ddbbf-568a-427d-8927-47e8219b88ac.png" alt="Игра Лила — сессия с доской и картами" class="gallery-img" tabindex="0">
+        <img src="assets/image-09-03-26-11-12-2-35b5c6a0-8bab-4423-932a-93b8380ccba5.png" alt="Ретрит в бане" class="gallery-img" tabindex="0">
+        <img src="assets/image-09-03-26-11-12-3-cb974c0b-60c5-4033-b63a-5563646e8047.png" alt="Руки над доской Лила с кубиком" class="gallery-img" tabindex="0">
+        <img src="assets/image-09-03-26-11-12-4-1cb02e6d-0e4e-4c2a-9de8-312a602dfdaa.png" alt="Практика с садху-досками" class="gallery-img" tabindex="0">
+        <img src="assets/image-09-03-26-11-12-5-f97d2cb4-5da4-48bd-a9cc-2e2da1f27ea8.png" alt="Поющие чаши и карты" class="gallery-img" tabindex="0">
       </div>
     </section>
+
+    <!-- Gallery Lightbox -->
+    <div class="gallery-lightbox" id="galleryLightbox" aria-hidden="true">
+      <button type="button" class="gallery-lightbox-close" id="galleryLightboxClose" aria-label="Закрыть">×</button>
+      <img src="" alt="" id="galleryLightboxImg">
+    </div>
 
     <!-- Game Section -->
     <section id="game" class="section game-section">
@@ -330,9 +336,39 @@
 
       focusPopupStart && focusPopupStart.addEventListener('click', closeFocusPopup);
 
+      // Gallery lightbox
+      const galleryLightbox = document.getElementById('galleryLightbox');
+      const galleryLightboxImg = document.getElementById('galleryLightboxImg');
+      const galleryLightboxClose = document.getElementById('galleryLightboxClose');
+      document.querySelectorAll('.gallery-img').forEach(function(img) {
+        img.addEventListener('click', function() {
+          galleryLightboxImg.src = this.src;
+          galleryLightboxImg.alt = this.alt;
+          galleryLightbox.setAttribute('aria-hidden', 'false');
+          galleryLightbox.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+      galleryLightboxClose && galleryLightboxClose.addEventListener('click', function() {
+        galleryLightbox.setAttribute('aria-hidden', 'true');
+        galleryLightbox.classList.remove('is-open');
+        document.body.style.overflow = '';
+      });
+      galleryLightbox && galleryLightbox.addEventListener('click', function(e) {
+        if (e.target === galleryLightbox) {
+          galleryLightbox.setAttribute('aria-hidden', 'true');
+          galleryLightbox.classList.remove('is-open');
+          document.body.style.overflow = '';
+        }
+      });
+
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-          if (focusPopup.classList.contains('is-open')) closeFocusPopup();
+          if (galleryLightbox && galleryLightbox.classList.contains('is-open')) {
+            galleryLightbox.setAttribute('aria-hidden', 'true');
+            galleryLightbox.classList.remove('is-open');
+            document.body.style.overflow = '';
+          } else if (focusPopup.classList.contains('is-open')) closeFocusPopup();
           else if (gameScreen.classList.contains('is-open')) closeGameScreen();
         }
       });
