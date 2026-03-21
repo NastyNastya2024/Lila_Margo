@@ -1201,9 +1201,10 @@ main {
   width: 100%;
   min-height: 72px;
   padding: 0.65rem 0.75rem;
-  background: var(--bg-page);
+  background: #f5f5f5;
   border: none;
   border-radius: 8px;
+  box-shadow: none;
   color: var(--purple-deep);
   font-family: inherit;
   font-size: 0.9rem;
@@ -1213,7 +1214,12 @@ main {
 
 .player-intention-block textarea:focus {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(var(--orange-rgb), 0.35);
+  box-shadow: none;
+}
+
+.player-intention-block textarea:focus-visible {
+  outline: 2px solid rgba(var(--orange-rgb), 0.55);
+  outline-offset: 2px;
 }
 
 .game-setup h3, .game-controls h3:not(.player-name-heading) {
