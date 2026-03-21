@@ -263,6 +263,61 @@ function buildBoard() {
       boardElement.appendChild(cell);
     }
   }
+  buildSnake63to2();
+}
+
+function buildSnake63to2() {
+  const container = document.getElementById('boardSnakes');
+  if (!container) return;
+  container.innerHTML = '';
+  const img = document.createElement('img');
+  img.src = 'assets/snakes/snake-63-2.png';
+  img.alt = '';
+  img.className = 'snake-asset';
+  img.dataset.from = '63';
+  img.dataset.to = '2';
+  container.appendChild(img);
+  requestAnimationFrame(() => requestAnimationFrame(positionSnakes));
+}
+
+function positionSnakes() {
+  const container = document.getElementById('boardSnakes');
+  const cells = boardElement.querySelectorAll('.cell');
+  if (!container || !cells.length) return;
+
+  const contRect = container.getBoundingClientRect();
+  const getCellEl = (cellNum) => {
+    const el = boardElement.querySelector(`.cell[data-cell="${cellNum}"]`);
+    return el ? el.getBoundingClientRect() : null;
+  };
+
+  container.querySelectorAll('.snake-asset').forEach(img => {
+    const from = +img.dataset.from;
+    const to = +img.dataset.to;
+    const headRect = getCellEl(from);
+    const tailRect = getCellEl(to);
+    if (!headRect || !tailRect) return;
+
+    const headCx = headRect.left - contRect.left + headRect.width / 2;
+    const headCy = headRect.top - contRect.top + headRect.height / 2;
+    const tailCx = tailRect.left - contRect.left + tailRect.width / 2;
+    const tailCy = tailRect.top - contRect.top + tailRect.height / 2;
+
+    const dx = tailCx - headCx;
+    const dy = tailCy - headCy;
+    const len = Math.sqrt(dx * dx + dy * dy) * 1.3;
+    const angleDeg = 90 + Math.atan2(dx, dy) * 180 / Math.PI;
+    const midX = (headCx + tailCx) / 2;
+    const midY = (headCy + tailCy) / 2;
+    const snakeW = Math.max(len * 0.12, 24);
+
+    img.style.left = `${midX - snakeW / 2}px`;
+    img.style.top = `${midY - len / 2}px`;
+    img.style.width = `${snakeW}px`;
+    img.style.height = `${len}px`;
+    img.style.transform = `rotate(${angleDeg}deg)`;
+    img.style.transformOrigin = 'center center';
+  });
 }
 
 function renderPlayersList() {
@@ -439,9 +494,10 @@ function updateHistory() {
   ).join('');
 }
 
-// Resize handler for piece positions
+// Resize handler for piece positions and snakes
 window.addEventListener('resize', () => {
   if (game && game.gameStarted) updatePieces();
+  positionSnakes();
 });
 
 document.addEventListener('DOMContentLoaded', initGame);

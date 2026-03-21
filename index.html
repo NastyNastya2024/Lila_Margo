@@ -6,7 +6,7 @@
   <title>Игра Лила</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -27,26 +27,32 @@
     <section id="game" class="section game-section">
       <div class="game-screen-layout">
         <div class="game-board-area">
-          <div class="game-board" id="gameBoard"></div>
+          <div class="game-board-wrapper">
+            <div class="game-board" id="gameBoard"></div>
+            <div class="board-snakes" id="boardSnakes" aria-hidden="true"></div>
+          </div>
           <div class="game-pieces" id="gamePieces"></div>
         </div>
         
         <div class="game-controls-panel">
           <div class="game-setup" id="gameSetup">
             <div class="game-panel-description">
-              <p>Трансформационная игра для самопознания и духовного развития. 72 клетки — путь от Рождения к Просветлению. Главная цель — не выигрыш, а исследование своего внутреннего мира и достижение клетки «Космическое сознание». Играй бесплатно прямо в браузере — одиночно или с друзьями.</p>
+              <h3 class="game-panel-title">Трансформационная игра<br>для самопознания и духовного развития</h3>
+              <p class="game-panel-subtitle">72 клетки — путь от Рождения к Просветлению. Главная цель — не выигрыш, а исследование своего внутреннего мира и достижение клетки «Космическое сознание». Играй бесплатно прямо в браузере — одиночно или с друзьями.</p>
             </div>
-            <div class="players-setup">
-              <label>Режим:</label>
-              <select id="gameMode">
-                <option value="solo">Соло</option>
-                <option value="multi">Несколько игроков</option>
-              </select>
-            </div>
-            <div id="playersList"></div>
-            <div class="game-panel-buttons">
+            <div class="game-setup-controls">
+              <div class="players-setup">
+                <label>Режим:</label>
+                <select id="gameMode">
+                  <option value="solo">Соло</option>
+                  <option value="multi">Несколько игроков</option>
+                </select>
+              </div>
+              <div id="playersList"></div>
+              <div class="game-panel-buttons">
               <button id="addPlayer" class="btn btn-secondary-panel">+ Добавить игрока</button>
               <button id="startGame" class="btn btn-primary-panel">Начать игру</button>
+              </div>
             </div>
           </div>
           
