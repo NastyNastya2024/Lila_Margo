@@ -60,8 +60,10 @@
             <h3 class="player-name-heading" id="currentPlayerName"></h3>
             <div class="player-view-tabs" id="playerViewTabs" hidden></div>
             <div class="player-intention-block" id="playerIntentionBlock" hidden>
-              <label for="playerIntentionInput">Намерение</label>
-              <textarea id="playerIntentionInput" rows="3" placeholder="Вопрос или намерение для этого игрока в этой партии…"></textarea>
+              <details class="player-intention-details" open>
+                <summary class="player-intention-summary">Намерение</summary>
+                <textarea id="playerIntentionInput" rows="3" placeholder="Вопрос или намерение для этого игрока в этой партии…" aria-label="Намерение"></textarea>
+              </details>
             </div>
             <p class="game-turn-line" id="gameTurnLine" hidden></p>
             <p class="game-status" id="gameStatus"></p>
