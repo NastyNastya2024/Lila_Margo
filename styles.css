@@ -1105,13 +1105,13 @@ main {
 }
 
 .game-setup .game-panel-description {
-  margin-top: auto;
-  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .game-setup .game-panel-buttons {
-  margin-top: 0.5rem;
+  margin-top: auto;
   margin-bottom: 0;
+  padding-top: 1rem;
 }
 
 .players-setup,
