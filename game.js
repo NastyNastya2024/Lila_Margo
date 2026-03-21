@@ -211,6 +211,14 @@ class LeelaGame {
     this.history = [];
     this.viewingPlayerIndex = 0;
   }
+
+  /** Соло, один игрок, позиции сброшены, вопрос и флаг партии очищены */
+  resetAllSettings() {
+    this.players = ['Игрок 1'];
+    this.reset();
+    this.gameStarted = false;
+    this.question = '';
+  }
 }
 
 // DOM & UI
@@ -239,12 +247,76 @@ function initGame() {
     renderPlayersList();
   });
 
+  const resetGameBtn = document.getElementById('resetGameBtn');
+  if (resetGameBtn) {
+    resetGameBtn.addEventListener('click', () => {
+      if (game.gameStarted) {
+        if (!confirm('Сбросить игру и вернуться к настройкам?')) return;
+      }
+      resetGameFully();
+    });
+  }
+
   // startGame is triggered from focus popup (see index.html)
   const diceEl = document.getElementById('dice');
   if (diceEl) diceEl.addEventListener('click', rollDice);
 
   buildBoard();
   renderPlayersList();
+}
+
+function resetGameFully() {
+  if (!game) return;
+
+  const focusPopup = document.getElementById('focusPopup');
+  if (focusPopup) {
+    focusPopup.setAttribute('aria-hidden', 'true');
+    focusPopup.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  game.resetAllSettings();
+
+  const modeEl = document.getElementById('gameMode');
+  if (modeEl) modeEl.value = 'solo';
+
+  const addPlayerBtn = document.getElementById('addPlayer');
+  if (addPlayerBtn) addPlayerBtn.style.display = 'none';
+
+  const setup = document.getElementById('gameSetup');
+  const controls = document.getElementById('gameControls');
+  if (setup) setup.style.display = 'block';
+  if (controls) controls.style.display = 'none';
+
+  const diceEl = document.getElementById('dice');
+  if (diceEl) {
+    diceEl.removeAttribute('data-value');
+    diceEl.classList.remove('dice-disabled', 'rolling');
+  }
+
+  const focusQuestion = document.getElementById('focusQuestion');
+  if (focusQuestion) focusQuestion.value = '';
+
+  const interp = document.getElementById('cellInterpretation');
+  if (interp) interp.innerHTML = '';
+
+  const nameEl = document.getElementById('currentPlayerName');
+  if (nameEl) nameEl.textContent = '';
+
+  const turnLine = document.getElementById('gameTurnLine');
+  if (turnLine) {
+    turnLine.textContent = '';
+    turnLine.hidden = true;
+  }
+
+  const statusEl = document.getElementById('gameStatus');
+  if (statusEl) statusEl.textContent = '';
+
+  renderPlayersList();
+  renderPlayerViewTabs();
+  updatePieces();
+  updateBoardHighlight();
+  updateHistory();
 }
 
 function buildBoard() {

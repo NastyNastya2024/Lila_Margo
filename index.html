@@ -19,6 +19,7 @@
     </a>
     <nav class="nav">
       <a href="https://metamorfeya.tilda.ws/" class="nav-link nav-btn-ghost">Вернуться на главную</a>
+      <button type="button" class="nav-link nav-btn-ghost" id="resetGameBtn">Начать сначала</button>
     </nav>
   </header>
 
@@ -63,11 +64,7 @@
             <div class="dice-container">
               <div class="dice" id="dice" title="Нажмите, чтобы бросить">
                 <span class="dice-question">?</span>
-                <div class="dice-face">
-                  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                  <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                </div>
+                <div class="dice-face dice-face-sprite" aria-hidden="true"></div>
               </div>
             </div>
             <div class="cell-interpretation" id="cellInterpretation"></div>
@@ -80,7 +77,7 @@
     <!-- Focus Popup (before game) -->
     <div class="focus-popup-overlay" id="focusPopup" aria-hidden="true">
       <div class="focus-popup">
-        <h3>Как сосредоточиться?</h3>
+        <h3>Какой ваш запрос?</h3>
         <p class="focus-popup-desc">Перед началом игры сформулируйте вопрос или намерение. На чём вы хотите сосредоточиться в этом сеансе?</p>
         <textarea id="focusQuestion" placeholder="Например: Что мне мешает найти работу? Как пройдёт мой отпуск? Какой следующий шаг мне сделать?"></textarea>
         <button type="button" class="btn btn-primary-panel" id="focusPopupStart">Продолжить</button>
