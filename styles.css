@@ -148,6 +148,44 @@ body {
   margin: 0;
 }
 
+.header-burger {
+  display: none;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 2;
+}
+
+.header-burger-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #fff;
+  border-radius: 1px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.header--nav-open .header-burger-bar:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.header--nav-open .header-burger-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.header--nav-open .header-burger-bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
 .logo {
   text-align: center;
 }
@@ -1921,14 +1959,44 @@ main {
 
   .header {
     padding: 0.75rem 1rem;
+    flex-wrap: nowrap;
+  }
+
+  .header-burger {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .header .nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem 1.25rem;
+    margin: 0;
+    background: rgba(180, 167, 214, 0.98);
+    backdrop-filter: blur(12px);
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 12px 32px rgba(45, 27, 78, 0.15);
+    z-index: 2;
+  }
+
+  .header--nav-open .nav {
+    display: flex;
+  }
+
+  .header .nav .nav-btn-ghost {
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
   }
 
   .logo-img {
     height: 30px;
-  }
-
-  .nav {
-    gap: 1.25rem;
   }
 
   .nav-link {
@@ -1985,12 +2053,6 @@ main {
 
   .game-controls-panel {
     padding-bottom: 0.65rem;
-  }
-
-  .nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
   }
   
   .section.about {

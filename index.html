@@ -13,11 +13,16 @@
   <div class="stars"></div>
   <div class="twinkling"></div>
 
-  <header class="header">
+  <header class="header" id="siteHeader">
     <a href="https://metamorfeya.tilda.ws/" class="header-logo" aria-label="MetaMorfeya — на главную">
       <img src="assets/logo-meta.png" alt="MetaMorfeya" class="logo-img">
     </a>
-    <nav class="nav">
+    <button type="button" class="header-burger" id="headerMenuToggle" aria-expanded="false" aria-controls="headerNav" aria-label="Открыть меню">
+      <span class="header-burger-bar" aria-hidden="true"></span>
+      <span class="header-burger-bar" aria-hidden="true"></span>
+      <span class="header-burger-bar" aria-hidden="true"></span>
+    </button>
+    <nav class="nav" id="headerNav">
       <a href="https://metamorfeya.tilda.ws/" class="nav-link nav-btn-ghost">Вернуться на главную</a>
       <button type="button" class="nav-link nav-btn-ghost" id="resetGameBtn">Начать сначала</button>
     </nav>

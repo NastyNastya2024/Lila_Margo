@@ -275,6 +275,65 @@ let game;
 let boardElement;
 let piecesContainer;
 
+function setupMobileNav() {
+  const header = document.getElementById('siteHeader');
+  const toggle = document.getElementById('headerMenuToggle');
+  const nav = document.getElementById('headerNav');
+  if (!header || !toggle || !nav) return;
+
+  const mqDesktop = window.matchMedia('(min-width: 901px)');
+
+  function closeNav() {
+    header.classList.remove('header--nav-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Открыть меню');
+    document.body.style.overflow = '';
+  }
+
+  function openNav() {
+    header.classList.add('header--nav-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Закрыть меню');
+    document.body.style.overflow = 'hidden';
+  }
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (header.classList.contains('header--nav-open')) closeNav();
+    else openNav();
+  });
+
+  nav.querySelectorAll('a[href]').forEach((a) => {
+    a.addEventListener('click', () => closeNav());
+  });
+
+  const resetBtn = document.getElementById('resetGameBtn');
+  if (resetBtn) {
+    resetBtn.addEventListener(
+      'click',
+      () => {
+        closeNav();
+      },
+      true
+    );
+  }
+
+  document.addEventListener('click', (e) => {
+    if (mqDesktop.matches) return;
+    if (!header.classList.contains('header--nav-open')) return;
+    if (header.contains(e.target)) return;
+    closeNav();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeNav();
+  });
+
+  window.addEventListener('resize', () => {
+    if (mqDesktop.matches) closeNav();
+  });
+}
+
 function initGame() {
   game = new LeelaGame();
   boardElement = document.getElementById('gameBoard');
@@ -306,6 +365,8 @@ function initGame() {
       resetGameFully();
     });
   }
+
+  setupMobileNav();
 
   // startGame is triggered from focus popup (see index.html)
   const diceEl = document.getElementById('dice');
