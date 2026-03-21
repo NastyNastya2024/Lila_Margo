@@ -259,10 +259,7 @@ function buildBoard() {
       if (isSnake) cell.classList.add('snake-cell');
       if (isGoal) cell.classList.add('goal-cell');
 
-      cell.innerHTML = `
-        <span class="cell-num">${cellNum}</span>
-        <span class="cell-name">${cellData?.name || ''}</span>
-      `;
+      cell.innerHTML = `<span class="cell-num">${cellNum}</span>`;
       boardElement.appendChild(cell);
     }
   }
