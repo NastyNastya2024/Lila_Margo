@@ -981,21 +981,6 @@ main {
   aspect-ratio: 9/8;
 }
 
-.board-snakes {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  bottom: 12px;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.board-snakes img {
-  position: absolute;
-  object-fit: contain;
-}
-
 .game-controls-panel {
   flex: 0 0 min(92vh, 1200px);
   display: flex;
@@ -1272,6 +1257,46 @@ main {
   border-radius: 2rem !important;
 }
 
+.player-view-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.player-view-tab {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.45rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--purple-deep);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(45, 27, 78, 0.2);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.player-view-tab:hover {
+  border-color: rgba(201, 162, 39, 0.55);
+}
+
+.player-view-tab.is-active {
+  background: rgba(201, 162, 39, 0.2);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(201, 162, 39, 0.35);
+}
+
+.game-turn-line {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0 0 0.75rem 0;
+  line-height: 1.4;
+}
+
 .dice-container {
   margin: 2.5rem 0 1rem;
   perspective: 400px;
@@ -1375,10 +1400,20 @@ main {
 
 .game-history {
   margin-top: 1rem;
-  max-height: 150px;
+  max-height: min(50vh, 420px);
   overflow-y: auto;
   font-size: 0.85rem;
   color: var(--text-muted);
+  -webkit-overflow-scrolling: touch;
+}
+
+.game-history-row {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid rgba(45, 27, 78, 0.08);
+}
+
+.game-history-row:last-child {
+  border-bottom: none;
 }
 
 /* Game Board */
@@ -1472,26 +1507,9 @@ main {
 .piece-2 { background: var(--accent-violet); }
 .piece-3 { background: #e91e63; }
 
-/* Game Rules */
-.game-rules {
-  background: var(--bg-card);
-  border-radius: 12px;
-  padding: 2rem;
-  border: 1px solid rgba(201,162,39,0.2);
-}
-
-.game-rules h3 {
-  color: var(--gold);
-  margin-bottom: 1rem;
-}
-
-.game-rules ul {
-  color: var(--text-secondary);
-  padding-left: 1.5rem;
-}
-
-.game-rules li {
-  margin-bottom: 0.5rem;
+.piece.piece--viewing {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.95), 0 0 12px rgba(201, 162, 39, 0.7);
+  z-index: 12;
 }
 
 /* Contact */

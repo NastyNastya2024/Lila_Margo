@@ -29,7 +29,6 @@
         <div class="game-board-area">
           <div class="game-board-wrapper">
             <div class="game-board" id="gameBoard"></div>
-            <div class="board-snakes" id="boardSnakes" aria-hidden="true"></div>
           </div>
           <div class="game-pieces" id="gamePieces"></div>
         </div>
@@ -38,7 +37,7 @@
           <div class="game-setup" id="gameSetup">
             <div class="game-panel-description">
               <h3 class="game-panel-title">Трансформационная игра<br>для самопознания и духовного развития</h3>
-              <p class="game-panel-subtitle">72 клетки — путь от Рождения к Просветлению. Главная цель — не выигрыш, а исследование своего внутреннего мира и достижение клетки «Космическое сознание». Играй бесплатно прямо в браузере — одиночно или с друзьями.</p>
+              <p class="game-panel-subtitle">Онлайн-игра на поле 8×9 (72 клетки). Движение по «змейке», кубик d6. Играйте в браузере — в соло или с друзьями.</p>
             </div>
             <div class="game-setup-controls">
               <div class="players-setup">
@@ -57,7 +56,9 @@
           </div>
           
           <div class="game-controls" id="gameControls" style="display: none;">
+            <div class="player-view-tabs" id="playerViewTabs" hidden></div>
             <h3 id="currentPlayerName"></h3>
+            <p class="game-turn-line" id="gameTurnLine" hidden></p>
             <p class="game-status" id="gameStatus"></p>
             <div class="dice-container">
               <div class="dice" id="dice" title="Нажмите, чтобы бросить">

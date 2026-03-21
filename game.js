@@ -29,6 +29,8 @@ class LeelaGame {
     this.positionBeforeSixes = 68;
     this.history = [];
     this.question = '';
+    /** Какого игрока позицию и историю показываем на панели и на доске */
+    this.viewingPlayerIndex = 0;
   }
 
   addPlayer() {
@@ -43,6 +45,9 @@ class LeelaGame {
     this.positions.splice(index, 1);
     if (this.currentPlayerIndex >= this.players.length) {
       this.currentPlayerIndex = 0;
+    }
+    if (this.viewingPlayerIndex >= this.players.length) {
+      this.viewingPlayerIndex = Math.max(0, this.players.length - 1);
     }
   }
 
@@ -195,7 +200,7 @@ class LeelaGame {
       note,
       cellName: LEELA_CELLS[cell]?.name || ''
     });
-    if (this.history.length > 20) this.history.pop();
+    if (this.history.length > 1000) this.history.pop();
   }
 
   reset() {
@@ -204,6 +209,7 @@ class LeelaGame {
     this.inGame = false;
     this.sixCount = 0;
     this.history = [];
+    this.viewingPlayerIndex = 0;
   }
 }
 
@@ -263,61 +269,6 @@ function buildBoard() {
       boardElement.appendChild(cell);
     }
   }
-  buildSnake63to2();
-}
-
-function buildSnake63to2() {
-  const container = document.getElementById('boardSnakes');
-  if (!container) return;
-  container.innerHTML = '';
-  const img = document.createElement('img');
-  img.src = 'assets/snakes/snake-63-2.png';
-  img.alt = '';
-  img.className = 'snake-asset';
-  img.dataset.from = '63';
-  img.dataset.to = '2';
-  container.appendChild(img);
-  requestAnimationFrame(() => requestAnimationFrame(positionSnakes));
-}
-
-function positionSnakes() {
-  const container = document.getElementById('boardSnakes');
-  const cells = boardElement.querySelectorAll('.cell');
-  if (!container || !cells.length) return;
-
-  const contRect = container.getBoundingClientRect();
-  const getCellEl = (cellNum) => {
-    const el = boardElement.querySelector(`.cell[data-cell="${cellNum}"]`);
-    return el ? el.getBoundingClientRect() : null;
-  };
-
-  container.querySelectorAll('.snake-asset').forEach(img => {
-    const from = +img.dataset.from;
-    const to = +img.dataset.to;
-    const headRect = getCellEl(from);
-    const tailRect = getCellEl(to);
-    if (!headRect || !tailRect) return;
-
-    const headCx = headRect.left - contRect.left + headRect.width / 2;
-    const headCy = headRect.top - contRect.top + headRect.height / 2;
-    const tailCx = tailRect.left - contRect.left + tailRect.width / 2;
-    const tailCy = tailRect.top - contRect.top + tailRect.height / 2;
-
-    const dx = tailCx - headCx;
-    const dy = tailCy - headCy;
-    const len = Math.sqrt(dx * dx + dy * dy) * 1.3;
-    const angleDeg = 90 + Math.atan2(dx, dy) * 180 / Math.PI;
-    const midX = (headCx + tailCx) / 2;
-    const midY = (headCy + tailCy) / 2;
-    const snakeW = Math.max(len * 0.12, 24);
-
-    img.style.left = `${midX - snakeW / 2}px`;
-    img.style.top = `${midY - len / 2}px`;
-    img.style.width = `${snakeW}px`;
-    img.style.height = `${len}px`;
-    img.style.transform = `rotate(${angleDeg}deg)`;
-    img.style.transformOrigin = 'center center';
-  });
 }
 
 function renderPlayersList() {
@@ -362,13 +313,17 @@ function startGame() {
   if (diceEl) diceEl.removeAttribute('data-value');
 
   updateGameUI();
+  renderPlayerViewTabs();
   updatePieces();
   updateBoardHighlight();
+  updateInterpretationForViewingPlayer();
 }
 
 function rollDice() {
   const diceEl = document.getElementById('dice');
   if (!diceEl || diceEl.classList.contains('dice-disabled')) return;
+
+  const rollingPlayerIdx = game.currentPlayerIndex;
 
   diceEl.classList.add('dice-disabled', 'rolling');
 
@@ -385,7 +340,9 @@ function rollDice() {
       const result = game.makeMove(value);
 
       if (result.success) {
+        game.viewingPlayerIndex = rollingPlayerIdx;
         updateGameUI();
+        renderPlayerViewTabs();
         updatePieces();
         updateBoardHighlight();
         if (!result.noMove) showInterpretation(result);
@@ -404,6 +361,7 @@ function rollDice() {
             }
           }, 500);
         } else if (result.rollAgain) {
+          updateHistory();
           setTimeout(() => {
             diceEl.classList.remove('dice-disabled', 'rolling');
           }, 400);
@@ -418,6 +376,51 @@ function rollDice() {
       }, 450);
     }
   }, 70);
+}
+
+function isMultiplayerGame() {
+  return document.getElementById('gameMode').value === 'multi' && game.players.length > 1;
+}
+
+function renderPlayerViewTabs() {
+  const wrap = document.getElementById('playerViewTabs');
+  if (!wrap || !game.gameStarted) return;
+
+  if (!isMultiplayerGame()) {
+    wrap.hidden = true;
+    wrap.innerHTML = '';
+    return;
+  }
+
+  wrap.hidden = false;
+  wrap.innerHTML = '';
+  game.players.forEach((name, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'player-view-tab' + (i === game.viewingPlayerIndex ? ' is-active' : '');
+    btn.dataset.idx = String(i);
+    btn.textContent = name;
+    btn.setAttribute('aria-pressed', i === game.viewingPlayerIndex ? 'true' : 'false');
+    btn.addEventListener('click', () => {
+      game.viewingPlayerIndex = i;
+      renderPlayerViewTabs();
+      updateGameUI();
+      updatePieces();
+      updateBoardHighlight();
+      updateHistory();
+      updateInterpretationForViewingPlayer();
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+function updateInterpretationForViewingPlayer() {
+  const interp = document.getElementById('cellInterpretation');
+  if (!interp) return;
+  const pos = game.positions[game.viewingPlayerIndex];
+  const cellData = LEELA_CELLS[pos];
+  if (!cellData) return;
+  interp.innerHTML = `<strong>${pos}. ${cellData.name}</strong><br>${cellData.desc}`;
 }
 
 function showInterpretation(result) {
@@ -444,7 +447,20 @@ function showInterpretation(result) {
 }
 
 function updateGameUI() {
-  document.getElementById('currentPlayerName').textContent = game.players[game.currentPlayerIndex];
+  const v = game.viewingPlayerIndex;
+  document.getElementById('currentPlayerName').textContent = game.players[v] || '';
+
+  const turnLine = document.getElementById('gameTurnLine');
+  if (turnLine) {
+    if (isMultiplayerGame()) {
+      turnLine.hidden = false;
+      turnLine.textContent = `Сейчас ходит: ${game.players[game.currentPlayerIndex]}`;
+    } else {
+      turnLine.hidden = true;
+      turnLine.textContent = '';
+    }
+  }
+
   document.getElementById('gameStatus').textContent = game.inGame
     ? 'Бросайте кубик'
     : 'Выбросьте 6 для входа в игру';
@@ -470,7 +486,7 @@ function updatePieces() {
     const offsetY = rect.top - wrapperRect.top + rect.height / 2 - pieceSize;
 
     const piece = document.createElement('div');
-    piece.className = `piece piece-${i}`;
+    piece.className = `piece piece-${i}${i === game.viewingPlayerIndex ? ' piece--viewing' : ''}`;
     piece.style.left = `${offsetX}px`;
     piece.style.top = `${offsetY}px`;
     piece.title = game.players[i];
@@ -480,7 +496,7 @@ function updatePieces() {
 
 function updateBoardHighlight() {
   boardElement.querySelectorAll('.cell').forEach(c => c.classList.remove('current'));
-  const pos = game.positions[game.currentPlayerIndex];
+  const pos = game.positions[game.viewingPlayerIndex];
   const { row, col } = getCellPosition(pos);
   const cellIdx = row * 9 + col;
   const cells = boardElement.querySelectorAll('.cell');
@@ -489,15 +505,15 @@ function updateBoardHighlight() {
 
 function updateHistory() {
   const hist = document.getElementById('gameHistory');
-  hist.innerHTML = game.history.slice(0, 10).map(h =>
-    `<div>${h.player}: ${h.cell}. ${h.cellName} — ${h.note}</div>`
+  const viewerName = game.players[game.viewingPlayerIndex];
+  const rows = game.history.filter(h => h.player === viewerName);
+  hist.innerHTML = rows.map(h =>
+    `<div class="game-history-row">${h.player}: ${h.cell}. ${h.cellName} — ${h.note}</div>`
   ).join('');
 }
 
-// Resize handler for piece positions and snakes
 window.addEventListener('resize', () => {
   if (game && game.gameStarted) updatePieces();
-  positionSnakes();
 });
 
 document.addEventListener('DOMContentLoaded', initGame);
