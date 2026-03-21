@@ -26,29 +26,6 @@
         <span class="heading-icon-circle" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12,2 15,9 22,9 17,14 19,22 12,17 5,22 7,14 2,9 9,9"/></svg></span>
         <h2 class="section-title">Игра Лила</h2>
       </div>
-      <div class="game-preview">
-        <div class="game-preview-text">
-          <span class="game-preview-label">ДОСКА</span>
-          <h2 class="game-preview-title">72 состояния сознания</h2>
-          <p>Доска Лилы отображает путь человеческого опыта — от самых плотных состояний иллюзии и кармы до освобождения и космического сознания.</p>
-          <p>Особые клетки запускают подъёмы и спуски, отражая нелинейную природу духовного роста. Ни один шаг не теряется — каждый спуск несёт более глубокое учение.</p>
-          <button type="button" class="btn btn-primary" id="openGameBtnPreview">Начать игру →</button>
-        </div>
-        <div class="game-preview-board-wrap">
-          <div class="game-preview-board" id="gamePreviewBoard"></div>
-          <div class="game-preview-legend">
-            <span class="legend-item"><span class="legend-dot legend-ascent"></span>Подъём</span>
-            <span class="legend-item"><span class="legend-dot legend-descent"></span>Спуск</span>
-            <span class="legend-item"><span class="legend-dot legend-reflection"></span>Размышление</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Fullscreen Game Screen -->
-    <div class="game-screen" id="gameScreen" aria-hidden="true">
-      <button type="button" class="game-screen-close" id="closeGameBtn" aria-label="Закрыть">×</button>
-      
       <div class="game-screen-layout">
         <div class="game-board-area">
           <div class="game-board" id="gameBoard"></div>
@@ -88,7 +65,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- Focus Popup (before game) -->
     <div class="focus-popup-overlay" id="focusPopup" aria-hidden="true">
@@ -108,62 +85,34 @@
   <script src="game-data.js"></script>
   <script src="game.js"></script>
   <script>
-    // Build game preview board
     (function() {
-      const board = document.getElementById('gamePreviewBoard');
-      if (!board || typeof BOARD_LAYOUT === 'undefined' || typeof LEELA_CELLS === 'undefined') return;
-      board.innerHTML = '';
-      for (let row = 0; row < 8; row++) {
-        for (let col = 0; col < 9; col++) {
-          const cellNum = BOARD_LAYOUT[row][col];
-          const cellData = LEELA_CELLS[cellNum];
-          const cell = document.createElement('div');
-          cell.className = 'preview-cell';
-          if (typeof ARROWS !== 'undefined' && cellNum in ARROWS) cell.classList.add('preview-ascent');
-          else if (typeof SNAKES !== 'undefined' && cellNum in SNAKES) cell.classList.add('preview-descent');
-          else cell.classList.add('preview-reflection');
-          cell.innerHTML = `<span class="preview-cell-num">${cellNum}</span><span class="preview-cell-name">${cellData?.name || ''}</span>`;
-          board.appendChild(cell);
-        }
-      }
-    })();
-  </script>
-  <script>
-    (function() {
-      const gameScreen = document.getElementById('gameScreen');
       const focusPopup = document.getElementById('focusPopup');
-      const openGameBtnPreview = document.getElementById('openGameBtnPreview');
-      const closeGameBtn = document.getElementById('closeGameBtn');
       const focusPopupStart = document.getElementById('focusPopupStart');
+      const startGameBtn = document.getElementById('startGame');
 
-      function openGameScreen() {
-        gameScreen.setAttribute('aria-hidden', 'false');
-        gameScreen.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
+      function openFocusPopup() {
         focusPopup.setAttribute('aria-hidden', 'false');
         focusPopup.classList.add('is-open');
-      }
-
-      function closeGameScreen() {
-        gameScreen.setAttribute('aria-hidden', 'true');
-        gameScreen.classList.remove('is-open');
-        document.body.style.overflow = '';
+        document.body.style.overflow = 'hidden';
       }
 
       function closeFocusPopup() {
         focusPopup.setAttribute('aria-hidden', 'true');
         focusPopup.classList.remove('is-open');
+        document.body.style.overflow = '';
       }
 
-      openGameBtnPreview && openGameBtnPreview.addEventListener('click', openGameScreen);
-      closeGameBtn && closeGameBtn.addEventListener('click', closeGameScreen);
-      focusPopupStart && focusPopupStart.addEventListener('click', closeFocusPopup);
+      startGameBtn && startGameBtn.addEventListener('click', function() {
+        openFocusPopup();
+      });
+
+      focusPopupStart && focusPopupStart.addEventListener('click', function() {
+        closeFocusPopup();
+        if (typeof startGame === 'function') startGame();
+      });
 
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-          if (focusPopup.classList.contains('is-open')) closeFocusPopup();
-          else if (gameScreen.classList.contains('is-open')) closeGameScreen();
-        }
+        if (e.key === 'Escape' && focusPopup.classList.contains('is-open')) closeFocusPopup();
       });
     })();
   </script>

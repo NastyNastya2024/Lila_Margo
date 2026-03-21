@@ -233,7 +233,7 @@ function initGame() {
     renderPlayersList();
   });
 
-  document.getElementById('startGame').addEventListener('click', startGame);
+  // startGame is triggered from focus popup (see index.html)
   const diceEl = document.getElementById('dice');
   if (diceEl) diceEl.addEventListener('click', rollDice);
 
