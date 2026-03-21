@@ -3,6 +3,47 @@
  * No backend, all logic and animations on client
  */
 
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function formatLongHtml(text) {
+  if (!text) return '';
+  return escapeHtml(text).replace(/\r\n/g, '\n').replace(/\n/g, '<br>');
+}
+
+/** Краткое + развёрнутое описание клетки (без заголовка с номером) */
+function cellInterpretationBodyHTML(cellNum) {
+  const c = LEELA_CELLS[cellNum];
+  if (!c) return '';
+  const short = escapeHtml(c.desc);
+  const longRaw = c.descLong && String(c.descLong).trim() ? String(c.descLong).trim() : '';
+  if (!longRaw) return `<p class="cell-desc-short">${short}</p>`;
+  return `<p class="cell-desc-short">${short}</p><details class="cell-desc-details"><summary class="cell-desc-summary">Полное описание клетки</summary><div class="cell-desc-long">${formatLongHtml(longRaw)}</div></details>`;
+}
+
+async function loadCellLongDescriptions() {
+  const urls = ['assets/cell-long.json', 'assets/cell-long-deep.json'];
+  for (let u = 0; u < urls.length; u++) {
+    try {
+      const r = await fetch(urls[u], { cache: 'no-store' });
+      if (!r.ok) continue;
+      const j = await r.json();
+      Object.keys(j).forEach((k) => {
+        const n = Number(k);
+        if (LEELA_CELLS[n]) LEELA_CELLS[n].descLong = j[k];
+      });
+    } catch (e) {
+      console.warn('loadCellLongDescriptions', urls[u], e);
+    }
+  }
+}
+
 // Path for snake movement (cell order on board)
 const PATH = [
   1,2,3,4,5,6,7,8,9,
@@ -28,21 +69,29 @@ class LeelaGame {
     this.sixCount = 0;
     this.positionBeforeSixes = 68;
     this.history = [];
-    this.question = '';
+    /** Намерение / вопрос для сеанса, по одному на игрока (индекс как у players) */
+    this.intentions = [''];
     /** Какого игрока позицию и историю показываем на панели и на доске */
     this.viewingPlayerIndex = 0;
+  }
+
+  ensureIntentionsLength() {
+    while (this.intentions.length < this.players.length) this.intentions.push('');
+    this.intentions.length = this.players.length;
   }
 
   addPlayer() {
     const num = this.players.length + 1;
     this.players.push(`Игрок ${num}`);
     this.positions.push(68);
+    this.intentions.push('');
   }
 
   removePlayer(index) {
     if (this.players.length <= 1) return;
     this.players.splice(index, 1);
     this.positions.splice(index, 1);
+    this.intentions.splice(index, 1);
     if (this.currentPlayerIndex >= this.players.length) {
       this.currentPlayerIndex = 0;
     }
@@ -215,9 +264,9 @@ class LeelaGame {
   /** Соло, один игрок, позиции сброшены, вопрос и флаг партии очищены */
   resetAllSettings() {
     this.players = ['Игрок 1'];
+    this.intentions = [''];
     this.reset();
     this.gameStarted = false;
-    this.question = '';
   }
 }
 
@@ -238,6 +287,7 @@ function initGame() {
     if (!multi && game.players.length > 1) {
       game.players = ['Игрок 1'];
       game.positions = [68];
+      game.intentions = [''];
       renderPlayersList();
     }
   });
@@ -263,6 +313,8 @@ function initGame() {
 
   buildBoard();
   renderPlayersList();
+  setupFocusPopup();
+  setupPlayerIntentionInput();
 }
 
 function resetGameFully() {
@@ -296,6 +348,9 @@ function resetGameFully() {
 
   const focusQuestion = document.getElementById('focusQuestion');
   if (focusQuestion) focusQuestion.value = '';
+
+  const playerIntentionBlock = document.getElementById('playerIntentionBlock');
+  if (playerIntentionBlock) playerIntentionBlock.hidden = true;
 
   const interp = document.getElementById('cellInterpretation');
   if (interp) interp.innerHTML = '';
@@ -374,8 +429,7 @@ function renderPlayersList() {
 function startGame() {
   game.gameStarted = true;
   game.reset();
-  const focusInput = document.getElementById('focusQuestion');
-  game.question = focusInput ? focusInput.value.trim() : '';
+  game.ensureIntentionsLength();
 
   const setup = document.getElementById('gameSetup');
   const controls = document.getElementById('gameControls');
@@ -389,6 +443,7 @@ function startGame() {
   updatePieces();
   updateBoardHighlight();
   updateInterpretationForViewingPlayer();
+  updatePlayerIntentionUI();
 }
 
 function rollDice() {
@@ -412,12 +467,18 @@ function rollDice() {
       const result = game.makeMove(value);
 
       if (result.success) {
-        game.viewingPlayerIndex = rollingPlayerIdx;
+        /* Просматриваемого игрока не переключаем на ходящего — только по вкладке */
         updateGameUI();
         renderPlayerViewTabs();
         updatePieces();
         updateBoardHighlight();
-        if (!result.noMove) showInterpretation(result);
+        if (!result.noMove) {
+          if (game.viewingPlayerIndex === rollingPlayerIdx) {
+            showInterpretation(result, rollingPlayerIdx);
+          } else {
+            updateInterpretationForViewingPlayer();
+          }
+        }
         document.getElementById('gameStatus').textContent = result.message;
 
         if (result.won) {
@@ -454,6 +515,97 @@ function isMultiplayerGame() {
   return document.getElementById('gameMode').value === 'multi' && game.players.length > 1;
 }
 
+function setupFocusPopup() {
+  const focusPopup = document.getElementById('focusPopup');
+  const focusPopupStart = document.getElementById('focusPopupStart');
+  const startGameBtn = document.getElementById('startGame');
+  const focusQuestion = document.getElementById('focusQuestion');
+  if (!focusPopup || !focusPopupStart || !startGameBtn || !focusQuestion) return;
+
+  let focusStep = 0;
+
+  function closeFocusPopup() {
+    focusPopup.setAttribute('aria-hidden', 'true');
+    focusPopup.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  function applyFocusStep() {
+    const focusTitle = document.getElementById('focusPopupTitle');
+    const focusDesc = document.getElementById('focusPopupDesc');
+    game.ensureIntentionsLength();
+    const multi = isMultiplayerGame();
+    focusQuestion.value = game.intentions[focusStep] || '';
+    if (focusTitle) {
+      focusTitle.textContent = multi
+        ? `${game.players[focusStep]}: какой ваш запрос?`
+        : 'Какой ваш запрос?';
+    }
+    if (focusDesc) {
+      focusDesc.textContent = multi
+        ? 'По очереди каждый игрок вводит своё намерение или вопрос для этой партии.'
+        : 'Перед началом игры сформулируйте вопрос или намерение. На чём вы хотите сосредоточиться в этом сеансе?';
+    }
+    focusPopupStart.textContent = multi
+      ? (focusStep < game.players.length - 1 ? 'Далее' : 'Начать игру')
+      : 'Продолжить';
+  }
+
+  function openFocusPopup() {
+    game.ensureIntentionsLength();
+    focusStep = 0;
+    applyFocusStep();
+    focusPopup.setAttribute('aria-hidden', 'false');
+    focusPopup.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  startGameBtn.addEventListener('click', openFocusPopup);
+
+  focusPopupStart.addEventListener('click', () => {
+    game.intentions[focusStep] = focusQuestion.value.trim();
+    const multi = isMultiplayerGame();
+    if (multi && focusStep < game.players.length - 1) {
+      focusStep += 1;
+      applyFocusStep();
+      return;
+    }
+    closeFocusPopup();
+    startGame();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && focusPopup.classList.contains('is-open')) {
+      game.intentions[focusStep] = focusQuestion.value.trim();
+      closeFocusPopup();
+    }
+  });
+}
+
+function setupPlayerIntentionInput() {
+  const input = document.getElementById('playerIntentionInput');
+  if (!input) return;
+  input.addEventListener('input', () => {
+    if (!game || !game.gameStarted) return;
+    game.ensureIntentionsLength();
+    game.intentions[game.viewingPlayerIndex] = input.value;
+  });
+}
+
+function updatePlayerIntentionUI() {
+  const block = document.getElementById('playerIntentionBlock');
+  const input = document.getElementById('playerIntentionInput');
+  if (!block || !input || !game) return;
+  if (!game.gameStarted) {
+    block.hidden = true;
+    return;
+  }
+  game.ensureIntentionsLength();
+  block.hidden = false;
+  const v = game.viewingPlayerIndex;
+  input.value = game.intentions[v] ?? '';
+}
+
 function renderPlayerViewTabs() {
   const wrap = document.getElementById('playerViewTabs');
   if (!wrap || !game.gameStarted) return;
@@ -461,6 +613,7 @@ function renderPlayerViewTabs() {
   if (!isMultiplayerGame()) {
     wrap.hidden = true;
     wrap.innerHTML = '';
+    updatePlayerIntentionUI();
     return;
   }
 
@@ -474,6 +627,11 @@ function renderPlayerViewTabs() {
     btn.textContent = name;
     btn.setAttribute('aria-pressed', i === game.viewingPlayerIndex ? 'true' : 'false');
     btn.addEventListener('click', () => {
+      const intInput = document.getElementById('playerIntentionInput');
+      if (intInput && game.gameStarted) {
+        game.ensureIntentionsLength();
+        game.intentions[game.viewingPlayerIndex] = intInput.value.trim();
+      }
       game.viewingPlayerIndex = i;
       renderPlayerViewTabs();
       updateGameUI();
@@ -481,9 +639,11 @@ function renderPlayerViewTabs() {
       updateBoardHighlight();
       updateHistory();
       updateInterpretationForViewingPlayer();
+      updatePlayerIntentionUI();
     });
     wrap.appendChild(btn);
   });
+  updatePlayerIntentionUI();
 }
 
 function updateInterpretationForViewingPlayer() {
@@ -492,27 +652,30 @@ function updateInterpretationForViewingPlayer() {
   const pos = game.positions[game.viewingPlayerIndex];
   const cellData = LEELA_CELLS[pos];
   if (!cellData) return;
-  interp.innerHTML = `<strong>${pos}. ${cellData.name}</strong><br>${cellData.desc}`;
+  interp.innerHTML = `<div class="cell-interpretation-head"><strong>${pos}. ${escapeHtml(cellData.name)}</strong></div><div class="cell-interpretation-body">${cellInterpretationBodyHTML(pos)}</div>`;
 }
 
-function showInterpretation(result) {
+function showInterpretation(result, moverPlayerIdx) {
   const interp = document.getElementById('cellInterpretation');
   const cell = result.newPosition;
   const cellData = LEELA_CELLS[cell];
   if (!cellData) return;
 
-  let text = `<strong>${cell}. ${cellData.name}</strong><br>${cellData.desc}`;
+  let text = `<div class="cell-interpretation-head"><strong>${cell}. ${escapeHtml(cellData.name)}</strong></div><div class="cell-interpretation-body">${cellInterpretationBodyHTML(cell)}</div>`;
 
   if (result.isArrow && result.landingCell) {
     const landData = LEELA_CELLS[result.landingCell];
-    text += `<br><em>↑ Стрела с клетки ${result.landingCell} (${landData?.name || ''}) подняла вас вверх!</em>`;
+    text += `<p class="cell-move-note cell-move-note--arrow"><em>↑ Стрела с клетки ${result.landingCell} (${escapeHtml(landData?.name || '')}) подняла вас вверх!</em></p>`;
   }
   if (result.isSnake && result.landingCell) {
     const landData = LEELA_CELLS[result.landingCell];
-    text += `<br><em>↓ Змея с клетки ${result.landingCell} (${landData?.name || ''}) опустила вас вниз. Задумайтесь над этим уроком.</em>`;
+    text += `<p class="cell-move-note cell-move-note--snake"><em>↓ Змея с клетки ${result.landingCell} (${escapeHtml(landData?.name || '')}) опустила вас вниз. Задумайтесь над этим уроком.</em></p>`;
   }
-  if (game.question) {
-    text += `<br><br>В контексте вашего вопроса: "${game.question}" — обратите внимание на то, как эта клетка резонирует с вашим запросом.`;
+  game.ensureIntentionsLength();
+  const intention = game.intentions[moverPlayerIdx] != null ? game.intentions[moverPlayerIdx].trim() : '';
+  if (intention) {
+    const who = escapeHtml(game.players[moverPlayerIdx] || '');
+    text += `<p class="cell-intention-context">В контексте намерения (${who}): «${escapeHtml(intention)}» — обратите внимание на то, как эта клетка резонирует с этим запросом.</p>`;
   }
 
   interp.innerHTML = text;
@@ -536,6 +699,8 @@ function updateGameUI() {
   document.getElementById('gameStatus').textContent = game.inGame
     ? 'Бросайте кубик'
     : 'Выбросьте 6 для входа в игру';
+
+  updatePlayerIntentionUI();
 }
 
 function updatePieces() {
@@ -575,17 +740,31 @@ function updateBoardHighlight() {
   if (cells[cellIdx]) cells[cellIdx].classList.add('current');
 }
 
+function historyRowHTML(h) {
+  const cellData = LEELA_CELLS[h.cell];
+  const player = escapeHtml(h.player);
+  const note = escapeHtml(h.note);
+  const cellName = escapeHtml(h.cellName || '');
+  const longRaw = cellData && cellData.descLong ? String(cellData.descLong).trim() : '';
+  let inner = `<div class="game-history-line">${player}: ${h.cell}. ${cellName} — ${note}</div>`;
+  if (longRaw) {
+    inner += `<details class="game-history-details"><summary class="game-history-summary">Полное описание клетки ${h.cell}</summary><div class="cell-desc-long">${formatLongHtml(longRaw)}</div></details>`;
+  }
+  return `<div class="game-history-row">${inner}</div>`;
+}
+
 function updateHistory() {
   const hist = document.getElementById('gameHistory');
   const viewerName = game.players[game.viewingPlayerIndex];
   const rows = game.history.filter(h => h.player === viewerName);
-  hist.innerHTML = rows.map(h =>
-    `<div class="game-history-row">${h.player}: ${h.cell}. ${h.cellName} — ${h.note}</div>`
-  ).join('');
+  hist.innerHTML = rows.map((h) => historyRowHTML(h)).join('');
 }
 
 window.addEventListener('resize', () => {
   if (game && game.gameStarted) updatePieces();
 });
 
-document.addEventListener('DOMContentLoaded', initGame);
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadCellLongDescriptions();
+  initGame();
+});

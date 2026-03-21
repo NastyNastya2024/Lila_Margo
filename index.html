@@ -57,13 +57,18 @@
           </div>
           
           <div class="game-controls" id="gameControls" style="display: none;">
+            <h3 class="player-name-heading" id="currentPlayerName"></h3>
             <div class="player-view-tabs" id="playerViewTabs" hidden></div>
-            <h3 id="currentPlayerName"></h3>
+            <div class="player-intention-block" id="playerIntentionBlock" hidden>
+              <label for="playerIntentionInput">Намерение</label>
+              <textarea id="playerIntentionInput" rows="3" placeholder="Вопрос или намерение для этого игрока в этой партии…"></textarea>
+            </div>
             <p class="game-turn-line" id="gameTurnLine" hidden></p>
             <p class="game-status" id="gameStatus"></p>
             <div class="dice-container">
               <div class="dice" id="dice" title="Нажмите, чтобы бросить">
                 <span class="dice-question">?</span>
+                <div class="dice-face dice-face-sprite" aria-hidden="true"></div>
               </div>
             </div>
             <div class="cell-interpretation" id="cellInterpretation"></div>
@@ -76,8 +81,8 @@
     <!-- Focus Popup (before game) -->
     <div class="focus-popup-overlay" id="focusPopup" aria-hidden="true">
       <div class="focus-popup">
-        <h3>Какой ваш запрос?</h3>
-        <p class="focus-popup-desc">Перед началом игры сформулируйте вопрос или намерение. На чём вы хотите сосредоточиться в этом сеансе?</p>
+        <h3 id="focusPopupTitle">Какой ваш запрос?</h3>
+        <p class="focus-popup-desc" id="focusPopupDesc">Перед началом игры сформулируйте вопрос или намерение. На чём вы хотите сосредоточиться в этом сеансе?</p>
         <textarea id="focusQuestion" placeholder="Например: Что мне мешает найти работу? Как пройдёт мой отпуск? Какой следующий шаг мне сделать?"></textarea>
         <button type="button" class="btn btn-primary-panel" id="focusPopupStart">Продолжить</button>
       </div>
@@ -90,37 +95,5 @@
 
   <script src="game-data.js"></script>
   <script src="game.js"></script>
-  <script>
-    (function() {
-      const focusPopup = document.getElementById('focusPopup');
-      const focusPopupStart = document.getElementById('focusPopupStart');
-      const startGameBtn = document.getElementById('startGame');
-
-      function openFocusPopup() {
-        focusPopup.setAttribute('aria-hidden', 'false');
-        focusPopup.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closeFocusPopup() {
-        focusPopup.setAttribute('aria-hidden', 'true');
-        focusPopup.classList.remove('is-open');
-        document.body.style.overflow = '';
-      }
-
-      startGameBtn && startGameBtn.addEventListener('click', function() {
-        openFocusPopup();
-      });
-
-      focusPopupStart && focusPopupStart.addEventListener('click', function() {
-        closeFocusPopup();
-        if (typeof startGame === 'function') startGame();
-      });
-
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && focusPopup.classList.contains('is-open')) closeFocusPopup();
-      });
-    })();
-  </script>
 </body>
 </html>
