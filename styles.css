@@ -1364,24 +1364,6 @@ main {
   100% { transform: rotateX(540deg) rotateY(360deg) rotateZ(270deg); }
 }
 
-/* Отдельные PNG граней кубика — на весь квадрат .dice */
-.dice-face-sprite {
-  display: none;
-  width: 100%;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100% 100%;
-  border-radius: inherit;
-}
-
-.dice[data-value="1"] .dice-face-sprite { background-image: url('assets/dice-1.png'); }
-.dice[data-value="2"] .dice-face-sprite { background-image: url('assets/dice-2.png'); }
-.dice[data-value="3"] .dice-face-sprite { background-image: url('assets/dice-3.png'); }
-.dice[data-value="4"] .dice-face-sprite { background-image: url('assets/dice-4.png'); }
-.dice[data-value="5"] .dice-face-sprite { background-image: url('assets/dice-5.png'); }
-.dice[data-value="6"] .dice-face-sprite { background-image: url('assets/dice-6.png'); }
-
 .dice-question {
   position: absolute;
   font-size: 3.5rem;
@@ -1391,9 +1373,31 @@ main {
   pointer-events: none;
 }
 
+.dice[data-value] {
+  background: #e8e8e8;
+  border-radius: 18px;
+  box-shadow:
+    0 2px 10px rgba(45, 27, 78, 0.12),
+    inset 0 1px 2px rgba(255, 255, 255, 0.85),
+    inset 0 -1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.dice[data-value]::after {
+  content: attr(data-value);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4.25rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent-violet);
+  pointer-events: none;
+}
+
 .dice[data-value] .dice-question { display: none; }
-.dice[data-value] .dice-face-sprite { display: block; }
-.dice:not([data-value]) .dice-face-sprite { display: none; }
 
 .game-status {
   color: var(--text-secondary);
