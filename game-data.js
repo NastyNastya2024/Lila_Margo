@@ -113,10 +113,10 @@ const RESTRICTED_MOVES = {
   71: [1]
 };
 
-// Board visual layout: top row = 64-72, bottom row = 1-9
+// Board visual layout: top row = 72…64 (слева направо, змейка после 63), bottom row = 1-9
 // Used for display and piece positioning
 const BOARD_LAYOUT = [
-  [64,65,66,67,68,69,70,71,72],  // row 0 - top
+  [72,71,70,69,68,67,66,65,64],  // row 0 - top
   [55,56,57,58,59,60,61,62,63],
   [54,53,52,51,50,49,48,47,46],
   [37,38,39,40,41,42,43,44,45],

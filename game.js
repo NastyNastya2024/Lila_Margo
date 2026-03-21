@@ -321,7 +321,7 @@ function resetGameFully() {
 
 function buildBoard() {
   boardElement.innerHTML = '';
-  // BOARD_LAYOUT: row 0 = top (64-72), row 7 = bottom (1-9)
+  // BOARD_LAYOUT: row 0 = top (72…64), row 7 = bottom (1-9)
   for (let row = 0; row < 8; row++) {
     for (let col = 0; col < 9; col++) {
       const cellNum = BOARD_LAYOUT[row][col];
