@@ -2056,6 +2056,22 @@ main {
   .game-board {
     max-width: 100%;
   }
+
+  .game-panel-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .game-panel-buttons .btn {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .game-panel-buttons #addPlayer,
+  .game-panel-buttons #startGame {
+    width: 100%;
+  }
   
   .cell {
     font-size: 0.5rem;
