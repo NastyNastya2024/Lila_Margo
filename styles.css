@@ -1031,14 +1031,20 @@ main {
 .game-board-area .game-board-wrapper {
   position: relative;
   width: 100%;
-  max-width: min(92vh, 1200px);
+  max-width: min(100%, min(92vh, 1200px));
+  min-width: 0;
   aspect-ratio: 9/8;
+  overflow: hidden;
+  border-radius: 16px;
 }
 
 .game-board-area .game-board {
   width: 100%;
   height: 100%;
-  aspect-ratio: 9/8;
+  min-width: 0;
+  min-height: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .game-controls-panel {
@@ -1067,19 +1073,25 @@ main {
 }
 
 .game-panel-title {
-  font-size: 2.7rem;
+  font-size: clamp(1.2rem, 0.85rem + 2.1vw, 2.7rem);
   font-weight: 400;
   color: var(--purple-deep);
   margin: 0 0 0.5rem 0;
-  line-height: 1.3;
+  line-height: 1.22;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
+  hyphens: auto;
 }
 
 .game-panel-subtitle {
-  font-size: 1.02rem;
+  font-size: clamp(0.88rem, 0.82rem + 0.45vw, 1.02rem);
   font-weight: 400;
   color: var(--text-secondary);
   line-height: 1.5;
   margin: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .game-panel-buttons {
@@ -1671,16 +1683,19 @@ main {
 /* Game Board */
 .game-board {
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-rows: repeat(8, 1fr);
-  gap: 3px;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  grid-template-rows: repeat(8, minmax(0, 1fr));
+  gap: clamp(1px, 0.4vw, 3px);
   background-image: url('assets/cosmic-bg.png');
   background-size: cover;
   background-position: center;
-  padding: 12px;
+  padding: clamp(4px, 2vw, 12px);
   border-radius: 16px;
   border: 2px solid rgba(139,105,20,0.5);
   box-shadow: 0 4px 30px rgba(45,27,78,0.4);
+  min-width: 0;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 .game-board-area .game-pieces {
@@ -1703,12 +1718,16 @@ main {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 6px 8px;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(2px, 1.2vw, 6px) clamp(3px, 1.5vw, 8px);
   position: relative;
   border-radius: 6px;
   background: transparent;
   border: 1px solid rgba(255,255,255,0.4);
   transition: box-shadow 0.3s, background 0.3s;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .game-board .cell:hover {
@@ -1729,10 +1748,18 @@ main {
 .cell-num {
   font-weight: 600;
   color: #fff;
-  font-size: clamp(0.65rem, 1.5vw, 0.9rem);
+  font-size: clamp(0.45rem, 2.8cqi, 0.9rem);
   font-family: 'Inter', sans-serif;
   line-height: 1.2;
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.game-board-area .game-board-wrapper {
+  container-type: inline-size;
+  container-name: game-board;
 }
 
 .game-pieces {
