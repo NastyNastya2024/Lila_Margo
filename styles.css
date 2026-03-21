@@ -1467,7 +1467,7 @@ main {
 }
 
 .dice-container {
-  margin: 2.5rem 0 1rem;
+  margin: 1rem 0 1rem;
   perspective: 400px;
 }
 
@@ -1748,18 +1748,13 @@ main {
 .cell-num {
   font-weight: 600;
   color: #fff;
-  font-size: clamp(0.45rem, 2.8cqi, 0.9rem);
+  font-size: clamp(0.42rem, 2.5vw, 0.9rem);
   font-family: 'Inter', sans-serif;
   line-height: 1.2;
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.game-board-area .game-board-wrapper {
-  container-type: inline-size;
-  container-name: game-board;
 }
 
 .game-pieces {
