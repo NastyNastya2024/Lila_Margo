@@ -1272,21 +1272,23 @@ main {
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--purple-deep);
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(45, 27, 78, 0.2);
-  border-radius: 999px;
+  background: rgba(230, 126, 34, 0.12);
+  border: 1px solid rgba(230, 126, 34, 0.45);
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, color 0.2s;
 }
 
 .player-view-tab:hover {
-  border-color: rgba(201, 162, 39, 0.55);
+  background: rgba(230, 126, 34, 0.22);
+  border-color: var(--orange-cta);
 }
 
 .player-view-tab.is-active {
-  background: rgba(201, 162, 39, 0.2);
-  border-color: var(--gold);
-  box-shadow: 0 0 0 1px rgba(201, 162, 39, 0.35);
+  background: var(--orange-cta);
+  color: #fff;
+  border-color: var(--orange-cta-hover);
+  box-shadow: 0 2px 8px rgba(230, 126, 34, 0.4);
 }
 
 .game-turn-line {
