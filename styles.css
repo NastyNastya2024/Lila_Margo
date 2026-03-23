@@ -2026,7 +2026,6 @@ main {
   }
 
   .game-controls-panel {
-    order: -1;
     flex: none;
     width: 100%;
     padding-bottom: 0.85rem;
@@ -2037,7 +2036,6 @@ main {
   }
 
   .game-board-area {
-    order: 1;
     margin-top: 0;
   }
 

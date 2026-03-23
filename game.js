@@ -44,17 +44,9 @@ async function loadCellLongDescriptions() {
   }
 }
 
-// Path for snake movement (cell order on board)
-const PATH = [
-  1,2,3,4,5,6,7,8,9,
-  18,17,16,15,14,13,12,11,10,
-  19,20,21,22,23,24,25,26,27,
-  36,35,34,33,32,31,30,29,28,
-  37,38,39,40,41,42,43,44,45,
-  54,53,52,51,50,49,48,47,46,
-  55,56,57,58,59,60,61,62,63,
-  72,71,70,69,68,67,66,65,64
-];
+// Порядок обхода поля: номера клеток 1…72 подряд (змейка на доске — см. BOARD_LAYOUT в game-data.js).
+// Ход: следующая клетка = текущая + значение кубика; затем применяются стрелы/змеи и ограничения 69–71.
+const PATH = Array.from({ length: 72 }, (_, i) => i + 1);
 
 const GOAL_CELL = 68;
 const ENTRY_CELL = 6;
@@ -169,11 +161,19 @@ class LeelaGame {
         return { success: true, rollAgain: true, message: 'Бросайте пока не выпадет другое число.' };
       }
       // 1 or 2 sixes - move and roll again
-      let newPos = this.moveForward(pos, 6);
-      newPos = this.applyCellEffect(newPos);
+      const landing = this.moveForward(pos, 6);
+      let newPos = this.applyCellEffect(landing);
       this.positions[playerIdx] = newPos;
       this.addHistory(playerName, newPos, 'Шесть!');
-      return { success: true, rollAgain: true, newPosition: newPos, message: 'Шесть! Бросайте снова.', isArrow: ARROWS[pos], isSnake: SNAKES[pos] };
+      return {
+        success: true,
+        rollAgain: true,
+        newPosition: newPos,
+        landingCell: landing,
+        message: 'Шесть! Бросайте снова.',
+        isArrow: !!ARROWS[landing],
+        isSnake: !!SNAKES[landing]
+      };
     }
 
     // Non-6 after sixes
